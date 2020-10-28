@@ -1,0 +1,72 @@
+/**index.wxss**/
+.authentication-top {
+	background: #fff;
+	font-size: 28rpx;
+}
+.authentication-top__title {
+	display: flex;
+	align-items: center;
+	padding: 26rpx 24rpx;
+	font-size: 30rpx;
+	border-bottom: 1rpx solid #F2F2F2;
+}
+.authentication-top__title_icon {
+	width: 26rpx;
+	height: 26rpx;
+	margin-right: 6rpx;
+	vertical-align: middle;
+}
+.authentication-top__info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 28rpx 0 38rpx;
+}
+.authentication-top__image {
+	width: 92rpx;
+	height: 92rpx;
+	margin-bottom: 16rpx;
+}
+.authentication-top__name {
+	font-size: 34rpx;
+	margin-bottom: 18rpx;
+}
+.authentication-top__mess {
+	width: 260rpx;
+	text-align: left;
+}
+.authentication-top__txt {
+	margin-bottom: 20rpx;
+}
+.authentication-lower {
+	font-size: 28rpx;
+	text-align: center;
+}
+.authentication-lower__form {
+	justify-content: space-between;
+	align-content: center;
+	padding: 0 24rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	margin: 40rpx 0 70rpx;
+}
+.authentication-lower__form_input {
+	text-align: left;
+	background: #FFFFFF;
+	border: 2rpx solid #F5D421;
+	border-radius: 10rpx;
+	width: 530rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	padding-left: 20rpx;
+}
+.authentication-lower__btn {
+	font-size: 36rpx;
+	height: 94rpx;
+	line-height: 94rpx;
+	margin: 0 auto;
+	text-align: center;
+	width: 670rpx;
+	background: #F5D421;
+	border-radius: 100rpx;
+}

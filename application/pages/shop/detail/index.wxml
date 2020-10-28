@@ -1,0 +1,42 @@
+<!--index.wxml-->
+<view class="swiper-container">
+  <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" autoplay="{{ autoplay }}" current="{{ current }}" interval="{{ interval }}" duration="{{ duration }}" circular="{{ circular }}" bindchange="swiperchange" catchtap="onSwiperTap">
+    <block wx:for="{{ cardetails.store_image_data }}" wx:key="">
+      <swiper-item>
+        <image src="{{ item.store_image }}" class="slide-image"/>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="swiper-pager">{{ current + 1 }}/{{ total }}</view>
+</view>
+<view class="car-info">
+   <view class="car-info__tit">{{ cardetails.car_name }}</view>
+   <view class="car-info__wrap">
+      <view class="car-info__earnest">订金：</view>
+      <view class="car-info__dollor weui-main__color"><text>{{ cardetails.subscription }}</text>元</view>
+      <view class="car-info__tip">【已定<text>{{ cardetails.preview }}</text>台】</view>
+   </view>
+   <view class="car-info__box">
+      <view class="car-info__common">首付： <text>{{ cardetails.coin }}</text>车币</view>
+      <view class="car-info__tip">【<text>{{ cardetails.person }}</text>人已选中】</view>
+   </view>
+   <view class="car-info__box">
+      <view class="car-info__common">售价： <text>{{ cardetails.dollor }}</text>万元</view>
+   </view>
+   <view class="car-info__box">
+      <view class="home-content__title_address">
+		  	<image class="home-content__title_icon" src="../../../assets/images/zgc-location.png"></image><text>{{ cardetails.address }}</text>
+		  </view>
+   </view>
+   <view class="car-info__invite" bindtap="inviteTap">邀请好友</view>
+</view>
+<view class="car-mid"><text class="car-mid__line"></text><text class="car-mid__txt car-info__common">车辆信息</text></view>
+<view class="car-intro">
+  <view class="car-intro__txt">奥迪全新S5家族，该车的内部预估价格区间为888-999元，包含Coupe(双门轿跑)、Sport车币ack（四门轿跑）、Ca车币riolet(双门敞篷)三种车身形式，详见下表。新车基于全家A5家族打造，其内外设计及动力均进行了运动化升级。</view>
+  <view class="car-intro__detail">
+    <view class="car-intro__detail-img"><image src="../../../assets/images/car_detail.png"></image></view>
+    <view class="car-intro__detail-txt">奥迪全新S5家族，该车的内部预估价格区间为888-999元，包含Coupe(双门轿跑)、Sport车币ack（四门轿跑）</view>
+  </view>
+</view>
+<view wx:if="{{ cardetails.drawcar_status == 0}}" class="store-btn" bindtap="previewCar">订车</view>
+<view wx:else class="store-btn store-btn__active" data-path="/pages/book/order/index" bindtap="navigateTo">已订车</view>

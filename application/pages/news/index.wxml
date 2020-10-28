@@ -1,0 +1,40 @@
+<!--index.wxml-->
+<view class="news-nav">
+  <view data-num="1" class="news-nav__item {{_num==1?'news-nav__item_active':''}}" bindtap="newsRead">
+    <text class="news-nav__item_txt">未读</text>
+    <text class="news-nav__item_num">8</text>
+  </view>
+  <view data-num="2" class="news-nav__item {{_num==2?'news-nav__item_active':''}}"  bindtap="newsRead">
+    <text class="news-nav__item_txt">已读</text>
+  </view>
+</view>
+<view wx:if="{{read}}" class="news-content">
+  <view wx:for="{{newsDatas}}" class="news-content__items">
+    <view class="news-content__head">
+      <view class="news-content__head_tit">
+        {{item.tit}}
+      </view>
+      <view class="news-content__head_time">
+       {{item.time}}
+      </view>
+    </view>
+    <view class="news-content__body">
+      {{item.txt}}
+    </view>
+  </view>
+</view>
+<view wx:if="{{!read}}" class="news-content">
+  <view wx:for="{{newsDataed}}" class="news-content__items">
+    <view class="news-content__head">
+      <view class="news-content__head_tit">
+        {{item.tit}}
+      </view>
+      <view class="news-content__head_time">
+       {{item.time}}
+      </view>
+    </view>
+    <view class="news-content__body">
+      {{item.txt}}
+    </view>
+  </view>
+</view>

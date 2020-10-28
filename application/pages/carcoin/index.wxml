@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<view class="carcoin-container">
+    <view class="carcoin-top">
+    	<view class="carcoin-top__tit">累计获利</view>
+    	<view class="carcoin-top__coin">{{ carcoin.coin_total }}<text class="carcoin-top__coin_txt">车币</text></view>
+    	<view class="code-btn" bindtap="scanCode">兑换礼品</view>
+    </view>
+    <view class="carcoin-box">
+    <view bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll"  scroll-top="{{scrollY}}">
+      <block wx:for="{{ carcoin.items }}" wx:key="">
+      <view wx:if="{{ item.month }}" class = "carcoin-year" >
+        {{item.month}}
+      </view>
+			<view wx:else class="weui-flex carcoin-list" data-index="{{ index }}" data-id="{{ item.id }}" data-time ="{{ item.year }}">
+				<view class="carcoin-list__item carcoin-list__item_one">
+					<text>{{ item.time }}</text>
+				</view>
+				<view class="carcoin-list__item carcoin-list__item_two">
+					<image class="carcoin-list__item_img" src="{{ item.image }}"></image>
+				</view>
+				<view class="carcoin-list__item carcoin-list__item_three">
+					<text>{{ item.name }}</text>
+				</view>
+				<view class="carcoin-list__item carcoin-list__item_four">
+					<text>{{ item.status }}</text>
+				</view>
+				<view class="carcoin-list__item carcoin-list__item_five">
+					<text>余额{{ item.coin_num }}</text>
+				</view>
+				<view class="carcoin-list__item carcoin-list__item_six">
+					<text wx:if="{{ item.coin_status == 1 }}" class="weui-main__color">{{ item.shou }}车币</text>
+					<text wx:else>{{ item.shou }}车币</text>
+				</view>
+			</view>
+		</block> 
+    </view>
+    </view>
+</view>
+

@@ -1,0 +1,8 @@
+<template name="network">
+	<view class="network-container" hidden="{{ !!networkStatus }}">
+		<view class="network-box">
+			<image src="../../../assets/images/zgc-no-network.png" class="network-icon" />
+	    	<text>网络迷路了～</text>
+		</view>
+	</view>
+</template>

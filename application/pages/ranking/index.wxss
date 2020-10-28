@@ -1,0 +1,86 @@
+
+.ranking-box {
+	background: #fff;
+}
+.ranking-list {
+	font-size: 24rpx;
+	color: #666;
+	padding: 17rpx 0;
+	align-items: center;
+	border-bottom: 1rpx solid #D8D8D8;
+}
+.ranking-fixed {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+	background: rgba(245,212,33,0.95);
+	box-shadow: 0 -2rpx 4rpx 0 rgba(159,159,159,0.31);
+	font-size: 24rpx;
+	color: #222;
+	padding: 17rpx 0;
+	align-items: center;
+}
+.ranking-list__item {
+	text-align: left;
+	padding-right: 10rpx;
+}
+.ranking-list__item_one {
+	width: 124rpx;
+	display: flex;
+	justify-content: center;
+	padding-right: 0;
+	text-align: center;
+}
+.ranking-fixed .ranking-list__item_one {
+	width: 154rpx;
+	flex-direction: column;
+}
+.ranking-list__item_two {
+	width: 64rpx;
+	padding-right: 10rpx;
+}
+.ranking-list__item_three {
+	width: 160rpx;
+	padding-right: 44rpx;
+	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	overflow: hidden;
+}
+.ranking-fixed .ranking-list__item_three {
+	width: 140rpx;
+}
+.ranking-list__item_four {
+	width: 200rpx;
+}
+.ranking-list__item_five {
+	width: 202rpx;
+}
+.ranking-fixed .ranking-list__item_five {
+	width: 192rpx;
+}
+.ranking-list__item_title {
+	margin-bottom: 10rpx;
+}
+.ranking-list__item_img {
+	width: 60rpx;
+	height: 60rpx;
+	vertical-align: middle;
+}
+.ranking-list__item_icon {
+	width: 46rpx;
+	height: 46rpx;
+	vertical-align: middle;
+}
+.ranking-list__item_own {
+	display: block;
+	width: 46rpx;
+	height: 46rpx;
+	border-radius: 46rpx;
+	font-size: 24rpx;
+	color: #000000;
+	line-height: 46rpx;
+	text-align: center;
+	background: #F5D421;
+}

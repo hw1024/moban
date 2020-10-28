@@ -1,0 +1,58 @@
+<!--index.wxml-->
+<import src="../../common/toast.wxml"/>
+<import src="../../common/dialog.wxml" />
+
+<view class="seecar-container">
+    <view class="seecar-top">
+    	<view wx:if="{{ items.see_car_status == 2 }}" class="seecar-top__status">
+    		<icon type="success" size="24" color="#7FCC0"/><text class="seecar-top__status_txt">预约成功</text>
+    	</view>
+    	<view wx:elif="{{ items.see_car_status == 3 }}" class="seecar-top__status">
+    		<icon type="success" size="24" color="#7FCC0"/><text class="seecar-top__status_txt">到店看车成功</text>
+    	</view>
+    	<view wx:else class="seecar-top__status">
+    		<text class="seecar-top__status_txt weui-main__color">预约已过期</text>
+    	</view>
+    	<view>预约码：<text class="weui-main__color">{{ items.car_code }}</text></view>
+    	<view class="seecar-top__code" data-path="/pages/seecar/authentication/index" bindtap="navigateTo">
+    		<image class="seecar-top__code_image" src="{{ items.qr_code }}"></image>
+    	</view>
+    	<view class="seecar-top__prize">到店看车，出示此二维码可获得丰厚奖品</view>
+    	<view class="seecar-top__time">有效期至{{ items.see_last_time }}</view>
+    </view>
+    <view class="seecar-list">
+		<view wx:if="{{ !!items.is_invite }}" class="weui-cell seecar-list__item">
+			<view>
+				<image class="seecar-list__image" src="{{ items.user_invite_image }}"></image>
+			</view>
+            <view class="weui-cell__bd">您的邀请人</view>
+            <view class="weui-cell__ft">微信：{{ items.user_invite_name }}</view>
+        </view>
+		<view class="weui-cell seecar-list__item">
+            <view>
+				<image class="seecar-list__image" src="../../../assets/images/zgc-user-default.png"></image>
+			</view>
+            <view class="weui-cell__bd">您的业务员</view>
+            <view class="weui-cell__ft">电话：{{ items.employee_phone }}</view>
+        </view>
+    </view>
+    <view class="seecar-lower">
+		<view class="seecar-lower__form weui-flex" wx:if="{{ showInput }}">
+			<view>
+				<input class="seecar-lower__form_input" bindinput="phoneinput" type="number" maxlength="11" placeholder="输入手机号方便业务员联系您，为您更好的服务"/>
+			</view>
+			<button data-status="{{ send_status }}" class="seecar-lower__form_btn" bindtap="sendmobileTap">
+                <text>获取验证码</text>
+            </button>
+		</view>
+		<view wx:if="{{ items.see_car_status == 3 }}" class="seecar-lower__text">已到店，奖品已领取</view>
+		<view wx:else class="seecar-lower__text weui-main__color">未到店，奖品未领取</view>
+    </view>
+    <view wx:if="{{ items.see_car_status == 4 }}" class="seecar-fixed__btn" bindtap="bindAppointTap">
+        <text>重新预约</text>
+    </view>
+</view>
+
+<template is="toast" data="{{ isShowToast, toastText }}"/>
+<template is="diapassView" data="{{ showDialog, temData }}" />
+

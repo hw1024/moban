@@ -1,0 +1,46 @@
+<!--index.wxml-->
+<import src="../../common/popup.wxml"/>
+<template is="dialog" data="{{ showModal, dialog, animationData }}"/>
+
+<view class="order-container">
+	<view class="order-box">
+		<view class="weui-cell order-box__title">
+	        <view class="weui-cell__bd">订单号：{{ items.order_nember }}</view>
+	        <view class="weui-cell__ft">
+	        	<text wx:if="{{ items.locking_status == 1 }}" class="weui-main__color">锁定中</text>
+    			<text wx:elif="{{ items.locking_status == 2 }}">锁定结束</text>
+	        </view>
+	    </view>
+	    <view class="order-box__info weui-flex" data-id="{{ items.car_id }}">
+			<view class="order-info__item">
+				<image class="order-info__item_image" src="{{ items.car_image }}"></image>
+			</view>
+			<view class="order-info__item">
+				<view class="order-info__item_text">{{ items.car_description}}</view>
+				<view class="weui-main__color">订金：¥{{ items.car_order_money }}</view>
+			</view>
+	    </view> 
+		<view class="order-box__list">
+	    	<view class="weui-cell success-list__item">
+	            <view class="weui-cell__bd">实付款</view>
+	            <view class="weui-cell__ft">¥{{ items.total_money }}</view>
+	        </view>
+	        <view class="weui-cell success-list__item">
+	            <view class="weui-cell__bd">锁定期</view>
+	            <view class="weui-cell__ft">{{ items.locking_time }}({{ items.locking_rise_time }}至{{ items.locking_stop_time }})</view>
+	        </view>
+	        <view class="weui-cell success-list__item">
+	            <view class="weui-cell__bd">订金协议</view>
+	            <view class="weui-cell__ft weui-main__color">《订车订金服务协议》</view>
+	        </view>
+	        <view class="weui-cell success-list__item">
+	            <view class="weui-cell__bd">联系业务员</view>
+	            <view class="weui-cell__ft weui-main__color">{{ items.employee_phone }}</view>
+	        </view>
+		</view>
+	</view>
+	<view wx:if="{{ items.locking_status == 2 && items.order_car_status == 1 }}" class="order-btn" bindtap="refundApplyTap">我要退订金</view>
+	<view wx:elif="{{ items.locking_status == 2 && items.order_car_status == 2 }}" class="order-btn">已申请</view>
+	<view wx:elif="{{ items.locking_status == 2 && items.order_car_status == 3 }}" class="order-btn">已退款</view>
+</view>
+

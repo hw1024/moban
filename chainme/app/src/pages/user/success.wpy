@@ -1,0 +1,78 @@
+<style lang="less">
+.bankset-container {
+  width: 100%;
+  height: 100%;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+.bankset-success {
+  padding-top: 80rpx;
+  background: #ffffff;
+  text-align: center;
+}
+.bankset-success__img {
+  width: 158rpx;
+  height: 158rpx;
+  vertical-align: top;
+}
+.bankset-success__txt {
+  font-size:36rpx;
+  font-weight: 600;
+  margin-top: 60rpx;
+  line-height: 50rpx;
+}
+.bankset-success__lucre {
+  margin-top: 16rpx;
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 40rpx;
+}
+.weui-btn__default {
+  width: 630rpx;
+  margin-top: 60rpx;
+}
+</style>
+<template>
+  <view class="bankset-container">
+    <view class="bankset-success">
+      <image class="bankset-success__img" src="../../assets/images/bankst_success.png"></image>
+      <view  class="bankset-success__txt">认证成功</view>
+      <view class="bankset-success__lucre">恭喜您，已经完成实名认证</view>
+      <button class="weui-btn__default" hover-class="none"  type="primary" @tap="banksetSuccess()">返回，前往获取数字版权</button>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class Success extends wepy.page {
+  config = {
+    navigationBarTitleText: '实名认证'
+  }
+
+  data = {
+
+  }
+
+  methods = {
+    banksetSuccess() {
+      let that = this
+      wepy.navigateBack({
+        delta: 2,
+        success: function (e) {
+          var page = that.getCurrentPages().pop()
+          if (page === undefined || page === null) return
+          page.isBankset()
+        }
+      })
+    }
+  }
+
+  onLoad() {
+
+  }
+}
+</script>

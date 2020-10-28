@@ -1,0 +1,76 @@
+<!--index.wxml-->
+<view class="earn-nav">
+  <view class="earn-nav__user">
+    <view>
+      <image class="earn-nav__user_logo" src="{{ userInfo.avatarUrl }}"></image>
+    </view>
+    <view class="earn-nav__user_wrap">
+      <view class="earn-nav__user_name">{{ userInfo.nickName }}</view>
+      <view class="earn-nav__user_store">
+        <image class="earn-nav__user_icon" src="../../../assets/images/zgc-location.png"></image><text>{{ earn.storeName }}</text>
+      </view>
+    </view>
+  </view>
+  <view class="earn-nav__look" data-earn-car-id="{{ earn.earn_car_id }}" bindtap="bindEarnTo">
+    <view class="earn-nav__look_imgp"><image  src="../../../assets/images/zgc-store.png"></image></view>
+    <text>进店看车</text>
+    <view class="earn-nav__look_imga"><image src="../../../assets/images/zgc-store_more.png"></image></view>
+  </view>
+</view>
+<view class="earn-car">
+  <view class="earn-car__tit">
+    <view class="earn-car__tit_name">
+      <view class="earn-car__tit_name-logo"><image src="../../../assets/images/amn-logo2.png"></image></view>
+      <text class="earn-car__tit_name-txt">马自达阿特兹</text>
+      <view class="earn-car__tit_name-btn" data-path="/pages/index/index" bindtap="switchTab">[更换车辆]</view>
+    </view>
+    <view class="earn-car__tit_detail" data-path="/pages/shop/detail/index" bindtap="navigateTo">查看详情</view>
+  </view>
+  <view class="swiper-container">
+    <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" autoplay="{{ autoplay }}" current="{{ current }}" interval="{{ interval }}" duration="{{ duration }}" circular="{{ circular }}" bindchange="swiperchange">
+        <block wx:for="{{ banners }}" wx:key="">
+            <swiper-item>
+                <image src="{{ item.path }}" class="slide-image"/>
+            </swiper-item>
+        </block>
+    </swiper>
+    <view class="swiper-pager"><text>{{ current + 1 }}/{{ total }}</text></view>
+  </view>
+</view>
+<view class="earn-info">
+  <view class="earn-info__line">
+    <view animation="{{ animationData2 }}" class="earn-info__line_dark">
+      <image class="earn-info__line_dark-car" src="../../../assets/images/animate-car.png"></image>
+      <view class="earn-info__line_dark-dialog">
+        <image class="earn-info__line_dark-bac" class="" src="../../../assets/images/animate-dialog.png"></image>
+        <text class="earn-info__line_dark-txt">正在赚2个车灯</text>
+      </view>
+    </view>
+  </view>
+  <view class="earn-info__num"> 
+    <view class="earn-info__num_target"><text>全部目标</text><image class="earn-info__num_btn" src='../../../assets/images/earn-details.png'></image></view>
+    <view class="earn-num__num_detail"><text class="earn-num__num_detail-possess">800</text>/<text class="earn-num__num_detail-total">1200</text>车币</view>
+  </view>
+  <view class="earn-invite" data-status="open" bindtap="powerDrawer">邀请好友帮我赚车</view>
+</view>
+<view class="earn-friend">
+  <view class="earn-friend__num">有<text>10</text>人正在帮我赚车</view>
+  <view class="earn-friend__wrap">
+    <view class="earn-friend__list {{ showMoreStatus ? 'earn-friend__list_active' : '' }} weui-clearfix">
+      <block wx:for="{{ friends }}" wx:key="">
+        <view class="earn-friend__item">
+          <image class="earn-friend__item_head" src="{{ item.path }}"></image>
+          <view class="earn-friend__item_help">帮赚<text class="earn-friend__item_help-txt">{{ item.num }}</text>车币</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="earn-more" data-status="open" bindtap="earnMoreTap"><image class="earn-more__btn" src="../../../assets/images/slide-more.png"></image></view>
+</view>
+<view class="drawer-screen" bindtap="powerDrawer" data-status="close" wx:if="{{ showModalStatus }}"></view> 
+<view animation="{{ animationData }}" class="drawer-attr__box" wx:if="{{ showModalStatus }}">
+  <view class="drawer-content">  
+    <button class="weui-drawer__btn weui-drawer__btn_active" type="default" open-type="share">分享到微信群</button>
+    <button class="weui-drawer__btn" type="default" bindtap="bindComposeTo">分享到朋友圈</button>
+  </view>  
+</view> 

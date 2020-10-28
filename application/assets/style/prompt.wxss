@@ -1,0 +1,66 @@
+.prompt-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26rpx;
+    color: #666;
+}
+.prompt-container_active {
+    height: 100%;
+}
+.prompt-container_active .prompt-message {
+    margin-top: 0;
+}
+.prompt-message {
+    margin-top: 120rpx;
+    text-align: center;
+}
+
+.prompt-message .prompt-icon {
+    width: 272rpx;
+    height: 272rpx;
+}
+
+.prompt-message .prompt-text {
+    margin-top:60rpx;
+}
+.prompt-message .prompt-button-area {
+    margin-top: 40rpx;
+}
+.prompt-message .prompt-button-area .prompt-button {
+    width: 324rpx;
+    height: 94rpx;
+    text-align: center;
+    line-height: 94rpx;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: #F5D421;
+    border-radius: 100rpx;
+
+}
+
+.prompt-message .prompt-button-area .prompt-button:after {
+    display: none;
+}
+
+.network-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.network-icon {
+  display: block;
+  width: 272rpx;
+  height: 272rpx;
+  margin-bottom: 60rpx;
+}

@@ -1,0 +1,50 @@
+<!--index.wxml-->
+<view class="compose-container">
+	<view class="compose-front" wx:if="{{ isCreate }}">
+		<view class="compose-box" style='background-image:url({{ bgWishes }});'>
+			<view class="compose-box__info">
+			    <view class="compose-box__info_item">
+			      <view class="compose-box__info_item-name">他想买的车型</view>
+			      <view class="weui-flex">
+			      	<view class="compose-box__info_num" wx:for="{{ coin_num }}" wx:key="">
+			      		<text>{{ item }}</text>
+			      	</view>
+			      </view>
+			    </view>
+			    <view class="compose-box__info_item compose-box__info_item-lower">
+			    	<view>奥迪A4L</view>
+			    	<view>4S店已送出车币</view>
+			    </view>
+			    <image src="{{ path }}" class="compose-box__info_image"/>
+			</view>
+			<view class="compose-box__line">
+			    <view class="compose-box__line_dark" style="width:{{ proWidth || 1 }}px">
+			      <image class="compose-box__line_dark-car" src="../../../assets/images/animate-car.png"></image>
+			    </view>
+			</view>
+			<view class="compose-box__lower">
+				<view class="compose-box__lower_item">全部目标</view>
+   				<view class="compose-box__lower_item">800/<text>1200</text>车币</view>
+			</view>
+		</view>
+	  	<view class="compose-select">
+	      	<view class="compose-select__title">选则卡片</view>
+	      	<view class='compose-select__list'>
+	        	<scroll-view class="scroll-view__box" scroll-x>
+	          		<view class="scroll-view__item" wx:for="{{ order }}" wx:key="" style='background-image:url({{ item }})' data-id="{{ index }}" bindtap='bgChange'></view>
+	        	</scroll-view>
+	      	</view> 
+	  	</view>
+		<button class="compose-btn" type="primary" bindtap='syntheisis'>确定</button>
+		<canvas wx:if="{{ hasCanvas }}" class="compose-canvas" canvas-id="myCanvas"></canvas>
+	</view>
+	<view wx:else class="compose-after">
+		<image class="compose-after__image" src="{{ tempFilePath }}"></image>
+		<view class="compose-after__text">提示：保存图片后在朋友圈发布图片，即可分享成功</view>
+		<view class="compose-after__btn">
+			<button class="compose-after__btn_keep" type="default" bindtap='keepImage'>保存</button>
+			<button class="compose-after__btn_share" type="primary" open-type="share">发送</button>
+		</view>
+	</view>
+</view>
+

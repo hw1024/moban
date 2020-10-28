@@ -1,0 +1,10 @@
+<!--index.wxml--> 
+<import src="../../common/achievement.wxml"/>
+
+<view class="achievement-container">
+	<view class="achievement-title">
+        <text>有{{ achievementlist.pepele }}人正在帮我赚车，我累计赚取{{ achievementlist.coin_total }}车币</text>
+    </view>
+    <template is="achievementList" data="{{ achievementlist }}"/>
+</view>  
+

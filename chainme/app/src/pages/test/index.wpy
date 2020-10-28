@@ -1,0 +1,112 @@
+<style lang="less">
+
+</style>
+<template>
+    <view class="record-container">
+      <view class="video-box" wx:if="{{video}}">
+        <video class="video" src="{{video}}"></video>
+      </view>
+      <view class="weui-flex tips" @tap="addVideo">
+        <text>上传视频</text>
+      </view>
+      <view class="educt_hasupload_pic" wx:for="{{evalList[0].tempFilePaths}}" wx:key="index">
+        <image src="{{item.pic}}" class="upload"></image>
+      </view>
+      <view class="educt_upload_add" bindtap="joinPicture" data-index="{{0}}">
+        上传图片
+      </view>
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Test extends wepy.page {
+    config = {
+      navigationBarTitleText: '测试'
+    }
+
+    data = {
+      video: '',
+      evalList: [{ tempFilePaths: [], imgList: [] }]
+    }
+
+    methods = {
+      addVideo() {
+        let that = this
+        wepy.chooseVideo({
+          sourceType: ['album', 'camera'],
+          maxDuration: 60,
+          camera: 'back',
+          success: function (res) {
+            that.video = res.tempFilePath
+            that.$apply()
+          }
+        })
+      },
+      joinPicture(e) {
+        let index = e.currentTarget.dataset.index
+        var evalList = this.data.evalList
+        let that = this
+        let imgNumber = evalList[index].tempFilePaths
+        if (imgNumber.length >= 3) {
+          wepy.showModal({
+            title: '',
+            content: '最多上传三张图片',
+            showCancel: false
+          })
+          return
+        }
+        wepy.showActionSheet({
+          itemList: ['从相册中选择', '拍照'],
+          itemColor: '#f7982a',
+          success: function (res) {
+            if (!res.cancel) {
+              if (res.tapIndex === 0) {
+                that.methods.chooseWxImage('album', imgNumber)
+              } else if (res.tapIndex === 1) {
+                that.methods.chooseWxImage('camera', imgNumber)
+              }
+            }
+          }
+        })
+      },
+      chooseWxImage(type, list) {
+        let img = list
+        let len = img.length
+        let that = this
+        var evalList = that.data.evalList
+        wepy.chooseImage({
+          count: 3,
+          sizeType: ['original', 'compressed'],
+          sourceType: [type],
+          success: function (res) {
+            let addImg = res.tempFilePaths
+            let addLen = addImg.length
+            if ((len + addLen) > 3) {
+              for (let i = 0; i < (addLen - len); i++) {
+                let str = {}; str.pic = addImg[i]; img.push(str)
+              }
+            } else {
+              for (let j = 0; j < addLen; j++) {
+                let str = {}
+                str.pic = addImg[j]
+                img.push(str)
+              }
+            }
+            that.evalList = evalList
+            that.$apply()
+            that.methods.upLoadImg(img)
+          }
+        })
+      },
+      upLoadImg(list) {
+        let that = this
+        that.upload(that, list)
+      }
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>

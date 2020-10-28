@@ -1,0 +1,99 @@
+<style lang="less">
+  .set-container {
+    width: 100%;
+    height: 100%;
+    padding: 60rpx;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+  .weui-btn__default {
+    width: 630rpx;
+    margin-top: 70rpx;
+  }
+  .store-title {
+    font-size: 44rpx;
+    font-weight: 500;
+    margin-bottom: 10rpx;
+    line-height: 62rpx;
+  }
+</style>
+<template>
+  <view class="set-container">
+    <form bindsubmit="formSubmit">
+      <view class="store-title">你的知识小店叫什么？</view>
+      <view class="weui-section">
+        <view class="weui-section__title">店主名称</view>
+        <input class="weui-section__input" name="keeper_name" maxlength="10" placeholder="" value="{{ keeperName }}" bindinput="keeperName"/>
+      </view>
+      <view class="weui-section">
+        <view class="weui-section__title">知识小店名称</view>
+        <input class="weui-section__input" name="shop_name" maxlength="10" placeholder="" value="{{ shopName }}" bindinput="shopName"/>
+      </view>
+      <button class="weui-btn__default {{ keeperName && shopName ? '' : 'weui-btn__disables' }}" hover-class="none"  type="primary" formType="submit">确定</button>
+    </form>
+    <i-toast id="toast" />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+  export default class Revise extends wepy.page {
+    config = {
+      navigationBarTitleText: '链我',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      storeId: '',
+      keeperName: null,
+      shopName: null
+    }
+
+    methods = {
+      keeperName(e) {
+        let that = this
+        e.detail.value ? that.keeperName = e.detail.value : that.keeperName = null
+        that.$apply()
+      },
+      shopName(e) {
+        let that = this
+        e.detail.value ? that.shopName = e.detail.value : that.shopName = null
+        that.$apply()
+      },
+      formSubmit(e) {
+        let that = this
+        let [keeperName, shopName, storeId] = [that.keeperName, that.shopName, that.storeId]
+        if (keeperName && shopName && storeId) {
+          let params = { user_name: keeperName, store_name: shopName, id: storeId }
+          that.$parent.HttpService.postEditStore(params).then(res => {
+            let data = res.data
+            if (data.code === 200) {
+              that.$parent.WxService.switchTab('/pages/home/index').then(res => {
+                var page = that.getCurrentPages().pop()
+                if (page === undefined || page === null) return
+                page.onLoad()
+              })
+            } else {
+              $Toast({ content: data.msg || '服务器请求失败' })
+            }
+          })
+        }
+      }
+    }
+
+    onLoad(options) {
+      let that = this
+      let [ keeperName, shopName, storeId ] = [ decodeURIComponent(options.user_name), decodeURIComponent(options.store_name), options.store_id ]
+      if (keeperName && shopName && storeId) {
+        that.keeperName = keeperName
+        that.shopName = shopName
+        that.storeId = storeId
+      }
+      that.$apply()
+    }
+  }
+</script>

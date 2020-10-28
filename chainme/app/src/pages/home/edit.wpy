@@ -1,0 +1,722 @@
+<style lang="less">
+  .add-title {
+    background: #ffffff;
+    padding: 0 32rpx
+  }
+  .add-title__input {
+    padding: 33rpx 0;
+    font-size: 44rpx;
+    line-height: 62rpx;
+  }
+  .weui-section__input {
+    padding: 33rpx 0;
+    border-bottom: none;
+  }
+  .add-second {
+    background: #ffffff;
+    padding: 30rpx 32rpx;
+  }
+  .cover-box {
+    width: 288rpx;
+    height: 288rpx;
+    border-radius: 13rpx;
+    overflow: hidden;
+    position: relative;
+  }
+  .cover-pic {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+  }
+  .cover-still{
+    width: 100%;
+    height: 68rpx;
+    text-align: center;
+    line-height: 68rpx;
+    font-size: 28rpx;
+    color: #fff;
+    background:#18B215;
+    opacity: 0.95;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .area-box {
+    width: 100%; 
+    margin: 50rpx auto 0;
+    background: #F8F8F8;
+    padding: 23rpx 26rpx 16rpx;
+    border-radius: 5rpx;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .word-outer {
+    width: 100%;
+    height: 300rpx;
+    font-size: 24rpx;
+    line-height: 33rpx;
+  }
+  .word-text {
+    width: 100%;
+    height: 300rpx;
+    font-size: 28rpx;
+    line-height: 40rpx;
+  }
+  .word-limit {
+    display: block;
+    font-size: 28rpx;
+    line-height: 40rpx;
+    text-align: right;
+  }
+  .word-limit__cur {
+    color: #18B215;
+  }
+  .add-switch {
+    padding-top: 40rpx;
+    padding-bottom: 40rpx;
+  }
+  .weui-btn__default {
+    width: 650rpx;
+  }
+  .add-content__tap {
+    margin-top: 110rpx;
+    text-align: center;
+  }
+  .add-disable__btn {
+    width: 100rpx;
+    height: 100rpx;
+    vertical-align: top;
+  }
+  .add-disable__text {
+    margin-top: 40rpx;
+    font-size: 30rpx;
+    color:#666666;
+    line-height: 42rpx;
+  }
+  .add-btn {
+    padding: 30rpx 0;
+    text-align: center;
+  }
+  .add-btn__img {
+    width:48rpx;
+    height:48rpx;
+    margin: 0 auto;
+    vertical-align: top;
+  }
+  .add-item {
+    position: relative;
+  }
+  .strike-out {
+    padding: 10rpx;
+    position: absolute;
+    top: 32rpx;
+    right: 22rpx;
+  }
+  .strike-out__img {
+    width: 24rpx;
+    height: 24rpx;
+    vertical-align: top;
+  }
+  .add-info {
+    padding: 104rpx 50rpx 40rpx;
+    background: #ffffff;
+  }
+  .add-info__text {
+    font-size: 30rpx;
+    line-height: 54rpx;
+  }
+  .add-info__image {
+    width: 100%;
+    height: 456rpx;
+  }
+  .add-info__video {
+    width: 650rpx;
+    height: 460rpx;
+  }
+  .add-video__box {
+    width: 650rpx;
+    height: 460rpx;
+    position: relative;
+  }
+  .add-price {
+    margin-top: 50rpx;
+    border-bottom: 1rpx solid #E2E0E3;
+  }
+  .add-price__icon {
+    margin-right: 20rpx;
+    font-size: 60rpx;
+    font-weight:500;
+    line-height: 84rpx;
+  }
+  .add-price__input {
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 60rpx;
+    line-height: 72rpx;
+  }
+  .model-img{
+    width: 650rpx;
+    height: 460rpx;
+  }
+  .model-btn{
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+    margin:auto;
+    width:100rpx;
+    height:100rpx;
+    border-radius:50%;
+    background-color: rgba(0,0,0,.3);
+  }
+  .play-icon{
+      margin:28rpx 38rpx;
+      border-top:26rpx solid transparent;
+      border-left:36rpx solid #fff;
+      border-bottom:22rpx solid transparent;
+  }
+  .result-option {
+    margin-top: 56rpx;
+  }
+  .result-option__text {
+    line-height: 1;
+  }
+  .result-option__active {
+    color: #18B215;
+  }
+  .result-option__icon {
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 16rpx;
+    vertical-align: top;
+  }
+  .result-option__help {
+    width: 24rpx;
+    height: 24rpx;
+    margin-left: 12rpx;
+    vertical-align: top;
+  }
+  .result-option__item {
+    font-size: 30rpx;
+    color: #666666;
+    margin-top: 24rpx;
+    line-height: 42rpx;
+  }
+  .result-btn__box {
+    margin-top: 40rpx;
+    margin-bottom: 20rpx;
+    justify-content: space-between;
+  }
+  .result-btn {
+    width: 320rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    font-size: 36rpx;
+    font-weight: 500;
+    background: #00B615;
+    color: #ffffff;
+    border-radius: 50rpx; 
+  }
+  .result-btn__default {
+    background: #ffffff;
+    color: #00B615;
+    border: 3rpx solid #18B215;
+  }
+  .result-btn__disable {
+    background: #DCDCDC;
+    border: none;
+    color: #ffffff;
+  }
+  .popup-screen {
+    width: 100%;  
+    height: 100%;  
+    position: fixed;  
+    top: 0;  
+    left: 0;  
+    z-index: 1000;  
+    background: #000;  
+    opacity: 0.2;  
+    overflow: hidden;
+  }
+  .popup-box {
+    width: 510rpx;
+    text-align: center;
+    padding: 50rpx 0 72rpx;
+    background:#fff;
+    border-radius: 13rpx;
+    position: absolute;
+    top:50%;
+    left:50%;
+    -webkit-transform: translate(-50%, -50%,0);
+    transform:translate3d(-50%,-50%,0);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    z-index: 1999;
+  }
+  .popup-icon {
+    width: 230rpx;
+    height: 230rpx;
+    vertical-align: top;
+    margin-top: 50rpx;
+  }
+  .popup-tug {
+    margin-top: 40rpx;
+    padding-left: 55rpx;
+    padding-right: 33rpx;
+    text-align: left;
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 40rpx;
+  }
+  .popup-box .weui-btn__default {
+    margin-top: 40rpx;
+    width:422rpx;
+  }
+  .popup-del {
+    width: 48rpx;
+    height: 48rpx;
+    text-align: center;
+    position: absolute;
+    top: 25rpx;
+    right: 25rpx;
+  }
+  .popup-del__icon {
+    width: 24rpx;
+    height: 24rpx;
+    margin-top: 12rpx;
+    vertical-align: top;
+  }
+  .placeholder-style {
+    color: #666666;
+    font-size: 34rpx;
+    line-height: 48rpx;
+  }
+</style>
+<template>
+    <view class="add-container">
+      <block wx:if="{{ !show_status }}">
+        <view class="add-title">
+          <input class="add-title__input" name="title" maxlength="10" placeholder="输入标题(最多10个字)" placeholder-style="color: #999999;" value="{{ lore.title }}" bindinput="titleTap"/>
+        </view>
+        <view class="add-content">
+          <view wx:if="{{ items && items.length > 0 }}" class="add-content__box">
+            <input class="weui-dis__none" name="content" value="{{ items }}" />
+            <view class="add-btn" @tap="handleOpen(0)">
+              <image src="../../assets/images/icon_add_default.png" class="add-btn__img"></image>
+            </view>
+            <block wx:for="{{ items }}" wx:key="{{ index }}">
+              <view class="add-item">
+                <view class="strike-out" @tap="strikeOut('{{ index }}')">
+                  <image class="strike-out__img" src="../../assets/images/icon_off.png"></image>
+                </view>
+                <view class="add-info">
+                  <text wx:if="{{ item.type == 'text' }}" class="add-info__text" @tap="wordRevise('{{ index }}', '{{ item.value }}')">{{ item.value }}</text>
+                  <image wx:elif="{{ item.type == 'image' }}" src="{{ item.url }}" class="add-info__image" mode="widthFix"></image>
+                  <view wx:elif="{{ item.type == 'video' }}" class="add-video__box">
+                    <image class="model-img" mode="aspectFill" src="{{item.poster}}"></image>
+                    <view class="model-btn">
+                      <view class="play-icon"></view>
+                    </view>
+                  </view>
+                </view>
+                <view class="add-btn" @tap="handleOpen( '{{ index + 1 }}')">
+                  <image src="../../assets/images/icon_add_default.png" class="add-btn__img"></image>
+                </view>
+              </view>
+            </block>
+          </view>
+          <view wx:else class="add-content__tap" @tap="handleOpen(0)">
+            <image src="../../assets/images/add_btn.png" class="add-disable__btn"></image>
+            <view class="add-disable__text">可多次添加文字、图片、视频、音频和文件内容</view>
+          </view>
+        </view>
+        <view class="add-switch" wx:if="{{ lore.title && items && items.length > 0 }}">
+          <button class="weui-btn__default" hover-class="none"  type="primary" @tap="showStatus()">下一步</button>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="add-second">
+          <view class="cover-box">
+            <image src="{{ coverPic || '../../assets/images/upload_btn.png' }}" class="cover-pic" mode="aspectFill"></image>
+            <view class="cover-still" @tap="addPicTap">点击修改封面</view>
+            <input class="weui-dis__none" name="cover" value="{{ lore.cover || '' }}" />
+          </view>
+          <view class="add-price weui-flex__align">
+            <view class="add-price__icon">¥</view>
+            <input class="add-price__input" type="digit" maxlength="5" name="price" placeholder="设置价格（填写0即为免费）" placeholder-style="color:#666666;" value="{{ synopsis }}" placeholder-class="placeholder-style" value="{{ lore.price }}" bindinput="priceTap"/>
+          </view>
+          <view class="area-box">
+            <view class="word-outer">
+              <textarea wx:if="{{show}}" class="word-text" name="synopsis"  placeholder="填写知识简介" placeholder-style="color:#666666;" value="{{ synopsis }}" placeholder-class="placeholder-style" value="{{ lore.synopsis }}" maxlength="{{noteMaxLen}}" bindinput="bindWordLimit" />
+              <text wx:else>{{ lore.synopsis }}</text>
+            </view> 
+            <text class="word-limit"><text class="{{ currentNoteLen > 0 ? 'word-limit__cur':'' }}">{{currentNoteLen || 0}}</text>/{{noteMaxLen}}</text>
+          </view>
+          <view class="result-option">
+            <view class="result-option__item weui-flex__align" @tap="copyrightTap()">
+              <image wx:if="{{ !isCopyright }}" class="result-option__icon" src="../../assets/images/icon_select_no.png"></image>
+              <image wx:else class="result-option__icon" src="../../assets/images/icon_select_yes.png"></image>
+              <view class="result-option__text {{ !isCopyright ? '' : 'result-option__active'}}">获取数字版权</view>
+              <image class="result-option__help" src="../../assets/images/icon_help.png"></image>
+            </view>
+            <view class="result-option__item weui-flex__align" @tap="isShareTap()">
+              <image wx:if="{{ !isShare }}" class="result-option__icon" src="../../assets/images/icon_select_no.png"></image>
+              <image wx:else class="result-option__icon" src="../../assets/images/icon_select_yes.png"></image>
+              <view class="result-option__text {{ !isShare ? '' : 'result-option__active'}}">他人分享到一个群即可免费</view>
+              <image class="result-option__help" src="../../assets/images/icon_help.png"></image>
+            </view>
+          </view>
+          <view class="result-btn__box weui-flex__align">
+            <view class="result-btn result-btn__default" @tap="showStatus()">上一步</view>
+            <view class="result-btn {{ (lore.title && lore.price && lore.synopsis && items && items.length) > 0 ? '' : 'result-btn__disable' }}" @tap="editCreate()">完成编辑</view>
+          </view>
+        </view>
+      </block>
+      <view class="popup-screen"  wx:if="{{ showPopupStatus }}"></view>
+      <view class="popup-box" wx:if="{{ showPopupStatus }}">
+        <view class="popup-del" @tap="popupDel()"><image class="popup-del__icon" src="../../assets/images/icon_guanb.png"></image></view>
+        <view class="popup-top">
+          <image class="popup-icon" src="../../assets/images/real_name.png"></image>
+          <view class="popup-tug">根据有关规定，获取数字版权需要先进行实名认证</view>
+        </view>
+        <button class="weui-btn__default" hover-class="none"  type="primary" @tap="navigateTo('/pages/user/bankset')">实名认证</button>
+      </view>
+      <i-toast id="toast" />
+      <i-action-sheet visible="{{ visible }}" actions="{{ actions }}" show-cancel bind:cancel="handleCancel" bind:click="handleClickItem" />
+      <i-modal title="确认删除此项吗？" visible="{{ visibleModal }}" bind:ok="handleModalOk" bind:cancel="handleModalClose">
+        <view>删除后无法恢复哦~</view>
+      </i-modal>
+    </view>   
+</template>
+<script>
+  import wepy from 'wepy'
+  const uploadImage = require('../../utils/uploadAliyun.js')
+  const { $Toast } = require('../../components/base/index')
+  const util = require('../../utils/util.js')
+
+  export default class Edit extends wepy.page {
+    config = {
+      navigationBarTitleText: '创作知识',
+      'usingComponents': {
+        'i-action-sheet': '../../components/action-sheet/index',
+        'i-toast': '../../components/toast/index',
+        'i-modal': '../../components/modal/index'
+      }
+    }
+
+    data = {
+      show_status: false,
+      curr_id: null,
+      digital_copyright: '',
+      coverPic: '',
+      essay_id: '',
+      user: {},
+      store: {},
+      lore: {},
+      items: [],
+      contents: [],
+      show: true,
+      noteMaxLen: 200,
+      currentNoteLen: 0,
+      visible: false,
+      visibleModal: false,
+      showPopupStatus: false,
+      isCopyright: false,
+      isShare: true,
+      actions: [
+        {
+          name: '视频'
+        },
+        {
+          name: '图片'
+        },
+        {
+          name: '文字'
+        }
+      ],
+      curIndex: 0
+    }
+
+    methods = {
+      navigateTo(path) {
+        this.$parent.WxService.navigateTo(path)
+      },
+      popupDel() {
+        let that = this
+        that.showPopupStatus = !that.showPopupStatus
+        that.isCopyright = !that.isCopyright
+        that.show = !that.show
+        that.$apply()
+      },
+      copyrightTap() {
+        let that = this
+        that.isCopyright = !that.isCopyright
+        if (that.isCopyright && !that.is_bankset) {
+          that.showPopupStatus = !that.showPopupStatus
+          that.show = !that.show
+        }
+        that.$apply()
+      },
+      isShareTap() {
+        let that = this
+        that.isShare = !that.isShare
+        that.$apply()
+      },
+      videoPlay(id) {
+        this.curr_id = id
+        this.videoContext.play()
+        this.$apply()
+      },
+      strikeOut(index) {
+        let that = this
+        that.curIndex = index
+        that.visibleModal = true
+        that.$apply()
+      },
+      handleModalOk() {
+        let that = this
+        let curIndex = that.curIndex
+        that.items.splice(curIndex, 1)
+        that.contents.splice(curIndex, 1)
+        that.visibleModal = false
+        that.$apply()
+      },
+      handleModalClose() {
+        let that = this
+        that.visibleModal = false
+        that.$apply()
+      },
+      showStatus() {
+        let that = this
+        that.show_status = !that.show_status
+        that.$apply()
+      },
+      addPicTap() {
+        let that = this
+        wepy.chooseImage({
+          count: 1,
+          sizeType: ['original', 'compressed'],
+          sourceType: ['album'],
+          success: function (res) {
+            let addImg = res.tempFilePaths[0]
+            uploadImage({
+              filePath: addImg,
+              dir: 'chain-dev/images/' + util.formatDtae(new Date()) + '/',
+              that: that.$parent,
+              uid: that.user.id,
+              type: 'jpg',
+              status: 1,
+              success: function (res, name) {
+                that.recordUpload(res, name, 1).then((url) => {
+                  that.coverPic = addImg
+                  that.lore.cover = res
+                  that.$apply()
+                })
+              },
+              fail: function (res) {
+                $Toast({ content: '上传失败' })
+              }
+            })
+          }
+        })
+      },
+      titleTap(e) {
+        this.lore.title = e.detail.value
+        this.$apply()
+      },
+      priceTap(e) {
+        this.lore.price = e.detail.value
+        this.$apply()
+      },
+      bindWordLimit(e) {
+        var value = e.detail.value
+        var len = parseInt(value.length)
+        if (len > this.data.noteMaxLen) return
+        this.currentNoteLen = len
+        this.lore.synopsis = value
+        this.$apply()
+      },
+      wordRevise(index, value) {
+        let that = this
+        that.$parent.WxService.navigateTo('/pages/editor/index', {value: value, curIndex: index})
+      },
+      editCreate() {
+        let that = this
+        let copyrightVal = that.isCopyright ? 1 : 2
+        let shareVal = that.isShare ? 1 : 2
+        let [coverVal, titleVal, synopsisVal, priceVal, contentVal] = [that.lore.cover, that.lore.title, that.lore.synopsis, that.lore.price, that.contents]
+        console.log(titleVal, synopsisVal, priceVal, contentVal)
+        if (titleVal && synopsisVal && priceVal && contentVal) {
+          const params = { cover: coverVal, title: titleVal, synopsis: synopsisVal, price: priceVal, is_copyright: copyrightVal, is_share: shareVal }
+          params.content = JSON.stringify(contentVal)
+          params.id = that.essay_id
+          that.$parent.HttpService.postEditKnowledge(params).then(res => {
+            const data = res.data
+            if (data.code === 200) {
+              that.$parent.WxService.navigateTo('/pages/home/detail', {id: data.data.id})
+            } else {
+              $Toast({ content: data.msg || '服务器请求失败' })
+            }
+          })
+        }
+      },
+      handleOpen(index) {
+        this.curr_id = null
+        this.curIndex = index
+        this.visible = true
+        this.show = false
+        this.$apply()
+      },
+      handleCancel () {
+        this.visible = false
+        this.show = true
+        this.$apply()
+      },
+      handleClickItem ({ detail }) {
+        let that = this
+        const index = detail.index + 1
+        that.visible = false
+        this.show = true
+        that.$apply()
+        if (index === 1) {
+          wepy.chooseVideo({
+            sourceType: ['album'],
+            camera: 'back',
+            success: function (res) {
+              let videoSize = (res.size / (1024 * 1024)).toFixed(2)
+              if (videoSize > 150) {
+                $Toast({ content: '视频大小不能超过150M' })
+              } else {
+                uploadImage({
+                  filePath: res.tempFilePath,
+                  dir: 'chain-dev/video/' + util.formatDtae(new Date()) + '/',
+                  that: that.$parent,
+                  uid: that.user.id,
+                  type: 'mp4',
+                  status: 2,
+                  success: function (data, name) {
+                    that.recordUpload(data, name, 2).then((url) => {
+                      let addVideo = {type: 'video', url: res.tempFilePath, poster: url}
+                      that.items.splice(that.curIndex, 0, addVideo)
+                      that.contents.splice(that.curIndex, 0, {type: 'video', value: data, poster: url})
+                      that.$apply()
+                    })
+                  },
+                  fail: function (data) {
+                    $Toast({ content: '上传失败' })
+                  }
+                })
+              }
+            }
+          })
+        } else if (index === 2) {
+          let that = this
+          wepy.chooseImage({
+            count: 9,
+            sizeType: ['original', 'compressed'],
+            sourceType: ['album'],
+            success: function (res) {
+              let addImgs = res.tempFilePaths
+              let addLens = addImgs.length
+              for (let j = 0; j < addLens; j++) {
+                let imageStr = {}
+                imageStr.type = 'image'
+                imageStr.url = addImgs[j]
+                uploadImage({
+                  filePath: addImgs[j],
+                  dir: 'chain-dev/pic/' + util.formatDtae(new Date()) + '/',
+                  that: that.$parent,
+                  uid: that.user.id,
+                  type: 'jpg',
+                  status: 1,
+                  success: function (data, name) {
+                    that.recordUpload(data, name, 1).then((url) => {
+                      that.items.splice(that.curIndex, 0, imageStr)
+                      that.contents.splice(that.curIndex, 0, {type: 'image', value: data})
+                      that.$apply()
+                    })
+                  },
+                  fail: function (data) {
+                    $Toast({ content: '上传失败' })
+                  }
+                })
+              }
+            }
+          })
+        } else if (index === 3) {
+          that.$parent.WxService.navigateTo('/pages/editor/index', {curIndex: that.curIndex})
+        }
+      }
+    }
+  
+    onReady() {
+      this.videoContext = wepy.createVideoContext('myVideo')
+    }
+
+    onLoad(options) {
+      let that = this
+      that.essay_id = options.id
+      that.$apply()
+      that.$parent.HttpService.getRealname().then(res => {
+        const data = res.data
+        if (data.code === 200) {
+          that.is_bankset = data.data.data
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+      that.getData(options.id)
+    }
+
+    getData(id) {
+      let that = this
+      let params = { id: id }
+      that.$parent.HttpService.getLoreData(params).then(res => {
+        const data = res.data
+        if (data.code === 200) {
+          let len = parseInt(data.data.lore.synopsis.length)
+          that.digital_copyright = data.data.digital_copyright
+          that.coverPic = data.data.lore.cover_url
+          that.user = data.data.user
+          that.store = data.data.store
+          that.lore = data.data.lore
+          data.data.lore.is_copyright === '1' ? that.isCopyright = true : that.isCopyright = false
+          data.data.lore.is_share === '1' ? that.isShare = true : that.isShare = false
+          that.items = JSON.parse(data.data.lore.content)
+          that.contents = JSON.parse(data.data.lore.content)
+          that.currentNoteLen = len
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    isBankset() {
+      let that = this
+      that.showPopupStatus = false
+      that.is_bankset = true
+      that.$apply()
+    }
+
+    recordUpload(path, name, type) {
+      let that = this
+      return new Promise(function(resolve, reject) {
+        const params = { path: path, name: name, type: type }
+        that.$parent.HttpService.postrecordUpload(params).then(res => {
+          const data = res.data
+          if (data.code === 200) {
+            resolve(data.data.url)
+            $Toast({ content: '上传成功' })
+          } else {
+            reject(data.msg)
+            $Toast({ content: data.msg || '服务器请求失败' })
+          }
+        })
+      })
+    }
+  }
+</script>

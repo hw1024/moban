@@ -1,0 +1,34 @@
+<view class="list-container"> 
+  <view class="list-box">
+    <view class="nav-left"> 
+      <scroll-view scroll-y="true" scroll-top="{{ offsetTop }}" scroll-with-animation="true" style="height: {{ windowHeight }}px">
+        <block wx:for="{{ brands.items }}" wx:key=""> 
+          <view bindtap="switchRightTab" id="{{ index }}" data-index="{{ index }}" data-id="{{ item.id }}" class="nav-left_item {{curIndex == index ? 'active' : ''}}">
+            {{ item.name }}
+          </view>
+        </block>  
+      </scroll-view>  
+    </view>   
+    <view class="nav-right"> 
+      <scroll-view scroll-y="true" style="height: {{ windowHeight }}px" bindscrolltolower="getMoreCars"> 
+        <view class="nav-right_box" wx:if="{{ cars.items }}">  
+          <block wx:for="{{ cars.items }}" wx:key="">  
+            <view class="nav-right__items weui-flex" data-index="{{ index }}" data-id="{{ item.id }}" bindtap="redirectTo" >
+              <view>
+                <image class="nav-right__items_img" src="{{ item.image }}" lazy-load="true"></image>
+              </view>  
+              <view class="nav-right__items_content">
+                <view class="nav-right__items_content-item nav-right__items_content-series">{{ item.series }}</view>
+                <view class="nav-right__items_content-item">{{ item.select_num }}人已选中</view>
+                <view class="nav-right__items_content-item">首付：<text class="weui-main__color">{{ item.payment_num }}车币</text></view>
+                <view class="nav-right__items_content-item"><image class="nav-right__items_location" src="../../../assets/images/zgc-location.png"></image>{{ item.shop }}</view>
+              </view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>  
+          </block>
+        </view>  
+        <view wx:else>暂无数据</view> 
+      </scroll-view> 
+    </view>  
+  </view>
+</view>

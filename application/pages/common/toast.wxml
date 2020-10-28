@@ -1,0 +1,8 @@
+<template name="toast">
+	<view class="toast_mask" wx:if="{{ isShowToast }}"></view> 
+	<view class="toast-content__box" wx:if="{{ isShowToast }}"> 
+		<view class="toast-title">
+	 		<text>{{ toastText }}</text>
+	 	</view> 
+	</view>
+</template> 

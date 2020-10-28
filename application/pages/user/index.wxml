@@ -1,0 +1,85 @@
+<!--index.wxml-->
+<import src="../common/network.wxml"/>
+<template is="network" data="{{ networkStatus }}"/>
+
+<view class="user-container" wx:if="{{ !!networkStatus }}">
+	<view class="user-info">
+		<image class="user-info__avatar" src="{{ userInfo.avatarUrl }}"></image>	
+		<text class="user-info__nickname">{{ userInfo.nickName }}</text>
+		<view class="user-info__news" data-path="/pages/news/index" bindtap="navigateTo">
+			<image class="user-info__news_img" src="../../assets/images/zgc-news.png"></image>
+			<view wx:if="{{users.news !=0 }}" class="user-info__news_badge"></view>
+		</view>
+		<view class="user-info__today">
+			<view class="user-info__today_txt">今日已赚</view>
+			<view class="weui-main__color">{{ users.today_coin }}车币</view>
+		</view>
+	</view>
+	<view class="user-record">
+		<view class="weui-flex">
+	        <view class="weui-flex__item" data-path="/pages/carcoin/index" bindtap="navigateTo">
+	        	<view class="weui-flex__hd">累计赚的车币</view>
+	            <view class="weui-flex__bd weui-main__color">{{ users.add_coin }}</view>
+	        </view>
+	        <view class="weui-flex__item" data-path="/pages/ranking/index" bindtap="switchTab">
+	        	<view class="weui-flex__hd">总榜排行</view>
+	            <view class="weui-flex__bd weui-main__color">{{ users.ranking }}</view>
+	        </view>
+	    </view>
+    </view>
+    <view class="user-voucher" wx:if="{{ !!users.items.length }}">
+		<view class="weui-cell">
+            <view class="weui-cell__bd">我正在赚个车</view>
+            <view class="weui-cell__ft" data-path="/pages/changecar/index" bindtap="navigateTo">已换过的车({{ users.change_num }})</view>
+        </view>
+        <block wx:for="{{ users.items }}" wx:key="*this">
+			<view class="user-voucher__box">
+				<view class="weui-cell" data-id="{{ item.id }}" data-shop-id="{{ item.shop_id }}" bindtap="voucherTap">
+	                <view class="weui-cell__hd">
+	                	<image class="user-voucher__box_img" src="{{ item.image }}"></image>
+	                </view>
+	                <view class="weui-cell__bd">
+	                	<view class="user-voucher__series">{{ item.series }}</view>
+	                	<view class="user-voucher__shop">
+	                		<image class="user-voucher__shop_icon" src="../../assets/images/zgc-location.png"></image><text>{{ item.shop }}</text>
+	                	</view>
+	                </view>
+	                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+	            </view>
+			</view>
+			<view class="weui-grids weui-flex">
+		        <view class="weui-grid" data-status="{{ item.seecar_status }}" bindtap="bindAppointTap">
+		        	<view wx:if="{{ item.seecar_status == '0' }}" class="weui-grid__title weui-main__color">到店看车</view>
+		        	<view wx:elif="{{ item.seecar_status == '1' }}" class="weui-grid__title">已预约看车</view>
+		        	<view wx:else class="weui-grid__title">已到店看车</view>
+		        </view>
+		        <view class="weui-grid" data-path="/pages/book/index/index" bindtap="navigateTo">
+		        	<view wx:if="{{ item.drawcar_status == '0' }}" class="weui-grid__title weui-main__color">订车</view>
+		        	<view wx:else class="weui-grid__title">已订车</view>
+		        </view>
+			</view>
+		</block>
+    </view>
+    <view class="user-achievement">
+    	<view class="weui-cell">
+            <view class="weui-cell__bd">我的业绩</view>
+        </view>
+		<view class="weui-grids weui-flex">
+	        <view class="weui-grid" data-path="/pages/achievement/earnlist/index" bindtap="navigateTo">
+	        	<view class="weui-grid__title"><text class="weui-grid__title_num">{{ users.earn_num }}</text>人</view>
+	            <view class="weui-grid__label">帮我赚车</view>
+	        </view>
+	        <view class="weui-grid" data-path="/pages/achievement/seelist/index" bindtap="navigateTo">
+	        	<view class="weui-grid__title"><text class="weui-grid__title_num">{{ users.see_num }}</text>人</view>
+	            <view class="weui-grid__label">到店看车</view>
+	        </view>
+	        <view class="weui-grid" data-path="/pages/achievement/drawlist/index" bindtap="navigateTo">
+	        	<view class="weui-grid__title"><text class="weui-grid__title_num">{{ users.book_num }}</text>人</view>
+	            <view class="weui-grid__label">订车</view>
+	        </view>  
+	    </view>
+    </view>
+    <view class="user-footer">
+		<image class="user-footer__icon" src="../../assets/images/zgc-sound.png"></image><text>吆喝一声赚个车</text>
+    </view>
+</view>

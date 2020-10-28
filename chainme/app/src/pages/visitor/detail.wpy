@@ -1,0 +1,476 @@
+<style lang="less">
+  .detail-container {
+    position: relative;
+  }
+  .user-islogin {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+  }
+  .detail-box {
+    padding: 0 32rpx 98rpx;
+    overflow-x: hidden;
+    background: #ffffff;
+  }
+  .detail-top {
+    padding: 20rpx 32rpx 26rpx;
+    background: #ffffff;
+    border-bottom: 1rpx solid #E5E5E5;
+    position: relative;
+  }
+  .detail-title {
+    font-size: 44rpx;
+    font-weight: 600;
+    line-height: 62rpx;
+  }
+  .detail-info {
+    margin-top: 20rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+  }
+  .detail-info__avatar {
+    width: 68rpx;
+    height: 68rpx;
+    border-radius: 68rpx;
+    vertical-align: top;
+    margin-right: 14rpx;
+  }
+  .detail-info__list {
+    text-align: left;
+    font-size: 28rpx;
+    line-height: 40rpx;
+    word-wrap:break-word;
+    white-space:normal;
+    word-break:break-all;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1; 
+  }
+  .detail-info__list_name {
+    margin-right: 10rpx;
+  }
+  .detail-info__list_time {
+    margin-right: 22rpx;
+    margin-top: 2rpx;
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 33rpx;
+  }
+  .detail-cover {
+    margin-top: 40rpx;
+  }
+  .detail-cover__img {
+    width: 100%;
+  }
+  .detail-summary {
+    font-size: 28rpx;
+    line-height: 50rpx;
+    color: #00410B;
+    padding: 30rpx;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-shadow: 0 2rpx 14rpx 0 rgba(0,0,0,0.11);
+    border-radius: 5rpx;
+    margin-top: 50rpx;
+  }
+  .detail-summary__title {
+    font-size: 36rpx;
+    font-weight: 500;
+    margin-bottom: 10rpx;
+  }
+  .detail-ramble {
+    width: 173rpx;
+    height: 68rpx;
+    background: #18B215;
+    border-top-left-radius: 100rpx;
+    border-bottom-left-radius: 100rpx;
+    justify-content: center;
+    position: absolute;
+    top: 20rpx;
+    right: 0;
+  }
+  .detail-ramble__icon {
+    width: 30rpx;
+    height: 30rpx;
+    margin-right: 14rpx;
+    vertical-align: top;
+  }
+  .detail-ramble__text {
+    font-size:28rpx;
+    color: #ffffff;
+    line-height:40rpx;
+  }
+  .digital-copyright {
+    bottom: 32rpx;
+    right: 32rpx;
+    top:auto;
+  }
+  .detail-content {
+    margin-top: 14rpx;
+  }
+  .detail-item {
+    margin: 50rpx 0;
+  }
+  .detail-item__text {
+    font-size: 30rpx;
+    line-height: 54rpx;
+  }
+  .detail-item__image {
+    width: 100%;
+    height: 456rpx;
+  }
+  .detail-item__video {
+    width: 686rpx;
+    height: 456rpx;
+  }
+  .add-video__box {
+    width: 686rpx;
+    height: 456rpx;
+    position: relative;
+  }
+  .model-img{
+    width: 686rpx;
+    height: 456rpx;
+  }
+  .model-btn{
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+    margin:auto;
+    width:100rpx;
+    height:100rpx;
+    border-radius:50%;
+    background-color: rgba(0,0,0,.3);
+  }
+  .play-icon{
+    margin:28rpx 38rpx;
+    border-top:26rpx solid transparent;
+    border-left:36rpx solid #fff;
+    border-bottom:22rpx solid transparent;
+  }
+  .detail-fixed {
+    background: #ffffff;
+    border-top: 1rpx solid #E5E5E5;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+  }
+  .detail-fixed__item {
+    padding: 29rpx 0;
+    width: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+  }
+  .detail-fixed__item .inner {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+  }
+  .detail-fixed__item:first-child .inner {
+    border-right: 1rpx solid #D8D8D8;
+  }
+  .detail-fixed__item_first {
+    padding: 29rpx 0;
+    width: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    justify-content: center;
+  }
+  .detail-fixed__item_first .money {
+    font-size: 32rpx;
+    line-height: 32rpx;
+    color: #F66925;
+    margin-left: 10rpx;
+  }
+  .detail-fixed__item_last {
+    width: 50%;
+    padding-top: 10rpx;
+    color: #fff;
+    text-align: center;
+    background: #00B615;
+  }
+  .detail-fixed__item_center {
+    padding: 29rpx 0;
+    width: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    background: #00B615;
+  }
+  .detail-fixed__wechat {
+    width: 46rpx;
+    height: 40rpx;
+    margin-right: 17rpx;
+    vertical-align: top;
+  }
+  .detail-fixed__upload {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 17rpx;
+    vertical-align: top;
+  }
+  .detail-fixed__text {
+    font-size: 30rpx;
+    line-height: 42rpx;
+  }
+  .detail-fixed__small {
+    font-size: 24rpx;
+    line-height: 33rpx;
+  }
+</style>
+<template>
+    <view class="detail-container">
+      <button wx:if="{{ !isLogin }}" class="user-islogin weui-btn__init" hover-class="none" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"></button>
+      <view class="detail-top">
+        <block wx:if="{{ record.is_copyright == '1' }}">
+          <view class="digital-copyright">
+            <view wx:if="{{ record.address }}" class="digital-copyright__info" @tap="navigateTo('/pages/copyright/index', '{{ essay_id }}')">{{ record.address }}</view>
+            <view wx:else class="digital-copyright__info">认证中…</view>
+            <view class="digital-copyright__lower weui-flex__align">
+              <image wx:if="{{ record.address }}" class="digital_copyright__icon" src="../../assets/images/logo2.png"></image>
+              <image wx:else class="digital_copyright__icon" src="../../assets/images/logo1.png"></image>
+              <text>数字版权</text>
+            </view>
+          </view>
+        </block>
+        <view class="detail-title">{{ record.title }}</view>
+        <view class="detail-info">
+          <image class="detail-info__avatar" src="{{ record.avatar || '../../assets/images/user_default.png' }}"></image>
+          <view class="detail-info__list">
+            <view class="item weui-flex__align">
+              <text class="detail-info__list_name">{{ record.nickname || '链我' }}的</text>
+              <text>{{ record.store_name || '链我小店' }}</text>
+            </view>
+            <view class="item weui-flex__align">
+              <view class="detail-info__list_time">{{ record.shipment || 0 }}人已获得知识</view>
+            </view>
+          </view>
+        </view>
+        <view class="detail-ramble weui-flex__align" @tap="rambleShop('{{ record.store_id }}')">
+          <image class="detail-ramble__icon" src="../../assets/images/icon_shop.png"></image>
+          <text class="detail-ramble__text">逛小店</text>
+        </view>
+      </view>
+      <view class="detail-box">
+        <view class="detail-cover">
+          <image class="detail-cover__img" src="{{ record.cover || '../../assets/images/upload_btn.png' }}" mode="widthFix"></image>
+        </view>
+        <view class="detail-summary">
+          <view class="detail-summary__title">简介</view>
+          <text>{{ record.synopsis }}</text>
+        </view>
+        <view class="detail-content">
+          <view class="detail-content__box" wx:if="{{ items && (items.length > 0) && (record.is_have == '1') }}">
+            <block wx:for="{{ items }}" wx:key="index">
+              <view class="detail-item">
+                <text wx:if="{{ item.type == 'text' }}" class="detail-item__text">{{ item.value }}</text>
+                <image wx:elif="{{ item.type == 'image' }}" src="{{ item.value }}" class="detail-item__image" mode="widthFix"></image>
+                <view wx:elif="{{ item.type == 'video' }}" class="add-video__box" @tap="videoPlay('{{ index }}')">
+                  <video wx:if="{{ curr_id == index }}" src="{{ item.url }}" class="detail-item__video" objectFit="cover" id="myVideo" custom-cache="{{cache}}" poster="{{item.poster}}" controls></video>
+                  <view wx:else >
+                      <image class="model-img" mode="aspectFill" src="{{item.poster}}"></image>
+                      <view class="model-btn">
+                          <view class="play-icon"></view>
+                      </view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+      <view class="detail-fixed">
+        <block wx:if="{{ record.is_have != '1' }}">
+          <view class="detail-fixed__item_first" @tap="navigateTo('/pages/order/index', '{{ essay_id }}')">
+            <text>购买</text><text class="money">¥ {{ record.price }}</text>
+          </view>
+          <button class="{{ record.is_share == '1' ? 'detail-fixed__item_last' : 'detail-fixed__item_center' }} weui-btn__init" open-type="share" hover-class="none">
+            <view class="detail-fixed__text">分享给好友</view>
+            <view wx:if="{{ record.is_share == '1' }}" class="detail-fixed__small">免费领取知识</view>
+          </button>
+        </block>
+        <block wx:else>
+          <button class="detail-fixed__item weui-btn__init" open-type="share" hover-class="none">
+            <view class="inner">
+              <image src="../../assets/images/wechat.png" class="detail-fixed__wechat"></image>
+              <text class="detail-fixed__text">分享给好友</text>
+            </view>
+          </button>
+          <view class="detail-fixed__item" @tap="navigateTo('/pages/home/compose', '{{ essay_id }}')">
+            <view class="inner">
+              <image src="../../assets/images/upload.png" class="detail-fixed__upload "></image>
+              <text class="detail-fixed__text">生成海报</text>
+            </view>
+          </view>
+        </block>
+      </view>
+      <i-toast id="toast" />
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const user = require('../../service/user.js')
+  const { $Toast } = require('../../components/base/index')
+  export default class VisitorDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '知识',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      essay_id: '',
+      isLogin: false,
+      record: null,
+      curr_id: null,
+      items: []
+    }
+
+    methods = {
+      navigateTo(path, id) {
+        let that = this
+        that.$parent.WxService.navigateTo(path, {id: id})
+      },
+      videoPlay(id) {
+        let that = this
+        that.curr_id = id
+        that.videoContext.play()
+        that.$apply()
+      },
+      rambleShop(id) {
+        let that = this
+        that.$parent.WxService.navigateTo('/pages/visitor/index', {store_id: id})
+      },
+      bindGetUserInfo(e) {
+        let that = this
+        user.loginByWeixin(that.$parent).then(res => {
+          that.onLoad({id: that.essay_id})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    }
+
+    onReady() {
+      let that = this
+      that.videoContext = wepy.createVideoContext('myVideo')
+    }
+  
+    onLoad(options) {
+      let that = this
+      that.essay_id = options.id
+      that.$apply()
+      let userInfo = wepy.getStorageSync('userInfo')
+      let token = wepy.getStorageSync('token')
+      if (userInfo && token) {
+        that.getDataLogin(options.id)
+        that.$parent.globalData.userInfo = userInfo
+        that.$parent.globalData.token = token
+        that.isLogin = true
+        that.$apply()
+        setTimeout(function () {
+          that.getLog(options.id, userInfo.id, that.record.store_id)
+        }, 1000)
+      } else {
+        that.getData(options.id)
+        that.isLogin = false
+        that.$apply()
+      }
+    }
+
+    getDataLogin(id) {
+      let that = this
+      let params = { id: id }
+      that.$parent.HttpService.getKnowledgeDetail(params).then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          that.record = data.data[0]
+          if (data.data[0].content) {
+            that.items = JSON.parse(data.data[0].content)
+          }
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    getLog(id, uid, storeId) {
+      let that = this
+      let params = { id: id, uid: uid, store_id: storeId }
+      that.$parent.HttpService.postAddLoreLog(params).then(res => {
+        let data = res.data
+        if (data.code === 200) {
+
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    getData(id) {
+      let that = this
+      let params = { id: id }
+      that.$parent.HttpService.getKnowledgeDetails(params).then(res => {
+        const data = res.data
+        if (data.code === 200) {
+          that.record = data.data[0]
+          if (data.data[0].content) {
+            that.items = JSON.parse(data.data[0].content)
+          }
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    onShareAppMessage(res) {
+      return {
+        title: '链我-知识小店 创作知识 收获价值',
+        path: '/pages/visitor/detail?id=' + `${this.essay_id}`,
+        success: (res) => {
+          let params = { kid: this.essay_id }
+          this.$parent.HttpService.postShare(params).then(res => {
+            const data = res.data
+            if (data.code === 200) {
+              this.onLoad({id: this.essay_id})
+              $Toast({ content: '转发成功' })
+            }
+          })
+        },
+        fail: (res) => {
+          $Toast({ content: '转发失败' })
+        }
+      }
+    }
+  }
+</script>

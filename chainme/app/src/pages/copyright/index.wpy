@@ -1,0 +1,136 @@
+<style lang="less">
+  .copyright-top {
+    padding: 10rpx 32rpx 32rpx;
+    background: #ffffff;
+  }
+  .weui-preview {
+    margin-top: 20rpx;
+    font-size:28rpx;
+    line-height:40rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+  }
+  .weui-preview__label {
+    width: 162rpx;
+    text-align: left;
+    color:#666666;
+  }
+  .weui-preview__value {
+    text-align: left;
+    word-wrap:break-word;
+    white-space:normal;
+    word-break:break-all;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1; 
+  }
+  .copyright-explain {
+    background: #ffffff;
+    padding: 0 32rpx;
+    margin-top: 14rpx;
+  }
+  .copyright-explain .explain-title {
+    font-size:32rpx;
+    text-align: center;
+    padding-top: 30rpx;
+    font-weight:600;
+    line-height:45rpx;
+  }
+  .copyright-explain .explain-list {
+    padding-top: 26rpx;
+  }
+  .copyright-explain .explain-list__item {
+    padding-bottom: 42rpx;
+    color: #666666;
+    font-size:28rpx;
+    line-height:40rpx;
+  }
+</style>
+<template>
+    <view class="copyright-container">
+      <view class="copyright-top">
+        <view class="weui-preview">
+          <view class="weui-preview__label">标题</view>
+          <view class="weui-preview__value">{{ title }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">作者</view>
+          <view class="weui-preview__value">{{ aut }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">身份证号</view>
+          <view class="weui-preview__value">{{ card }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">发布时间</view>
+          <view class="weui-preview__value">{{ time }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">数字版权</view>
+          <view class="weui-preview__value">{{ bq }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">区块链地址</view>
+          <view class="weui-preview__value">{{ address }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">内容Hash</view>
+          <view class="weui-preview__value">{{ hash }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">数字签名</view>
+          <view class="weui-preview__value">{{ qm }}</view>
+        </view>
+        <view class="weui-preview">
+          <view class="weui-preview__label">签名公钥</view>
+          <view class="weui-preview__value">{{ gy }}</view>
+        </view>
+      </view>
+      <view class="copyright-explain">
+        <view class="explain-title">版权认证说明</view>
+        <view class="explain-list">
+          <view class="explain-list__item">1.链我认证由「所有权证明」和「存在证明」两部分组成，符合国际X9.95协议标准。 </view>
+          <view class="explain-list__item">2.「所有权证明」使用数字签名技术来证明您是此原创作品的原始作者。数字签名通过验证一组公钥和密钥的匹配来证明所有权。公钥已写入「链我DNA」，随着原创作品一起发布。密钥已通过邮件发送到您的邮箱。为了安全，系统中不保存密钥，请您妥善保存此密钥，在任何情况下都不要泄露给其他人。 </view>
+          <view class="explain-list__item">3.「存在证明」用于证明原创作品的发布时间，使用了区块链技术以及来自国家数字证书中心的可信时间戳服务，认证信息也已经写入「链我DNA」中。 </view>
+          <view class="explain-list__item">4.原本认证不依赖于「链我」的权威性，可以脱离「链我」的系统，由任意第三方来验证。</view>
+        </view>
+      </view>
+      <i-toast id="toast" />
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+  export default class Copyright extends wepy.page {
+    config = {
+      navigationBarTitleText: '版权信息',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      title: '7天塑造钢琴基础（五)',
+      aut: '袁博',
+      card: '210************523',
+      time: '2018-06-26 23:54',
+      bq: '21X5JYIX0AW',
+      address: '3GURDRNYQGSRIOE2L50YWTMDRHY0XM7T6WLC3JR801H0YBSCKA',
+      hash: '4IMT437EHVGET9BMB3P33LXSTFRZFGXHU8ER649WBP4ZUM4M6G',
+      qm: 'MYKvmHnHxK8AU/3rPoRXFmnklj/5lE7R9SoV6+HJhrHm1lJABpDZYXlN4w+GPLYDYXczZxLdXonUDg55i0DjhZjcdn0oUJPv1NaAqqrs7Tg4lbGQyd2MtNjJbbZPzmhLS3JFwzhOIFeO6ZhiquoDEyUJwxnBKBg4BY9iHgDu2VXffpMMnXIBaDL7emGNiEt1cpuceGTnMg0OlmplyxR8U3rnWhsZ9C85n01IllCPW2nfgXcBl1BfLv+D0datvv8H8zBQkM9d6odpkXab0YD9/Ycl8swj5RsZ0o/Or9pje5M+IBNcBlruhHrYaUlfmYv+bD+BL2iY8hupXOLZl5SDg==',
+      gy: '-----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwc2t6CywHehM2112qqQIWCez+5Q4YQzcTYwb0iiLDMPMN3i67cNjOYr0WL37I1QJ/7VPBjlX82ccW5Dx9bwKbJ9e7IdHlue4WQCTUX2wNr6dWEQ1lCKu5RgtCTlC6W8D9AMpdHNy5091Fa5plMOZ3FZ2VkOroi9pKqwpnWBlUZPYH6+2FP0dlAPVnH7e9o5qc8CMB4PBr+/qX2pNNxPHqvwvZsr2fSf959w8oi5IblVaUZg0ULJa0v70L7CD9i00DOGYtQvB/zLX8lBOErAmZTKbx/Vu8+WObxcORe5m9txet0HBKsmhVUs38hdf47MZqu9a8bKAgDWU3BMCqAw8jwIDAQAB'
+    }
+
+    methods = {
+
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>

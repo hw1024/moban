@@ -1,0 +1,31 @@
+<template name="achievementList">
+    <view class="achievement-box">
+    	<block wx:for="{{ achievementlist.items }}" wx:key="">
+			<view class="achievement-list weui-flex">
+				<view class="achievement-list__item achievement-list__message">
+					<image class="achievement-list__item_img" src="{{ item.image }}"></image>
+					<view class="achievement-list__content">
+						<view class="achievement-list__content_top">
+							<text>帮赚{{ item.earn_coin }}车币,自己获得{{ item.own_coin }}车币</text>
+						</view>
+						<view class="achievement-list__content_lower">
+							<view class="achievement-list__content_lower-seecar">
+								<text>到店看车</text>
+								<image wx:if="{{ item.seecar_status == '0' }}" class="achievement-list__content_img" src="../../../assets/images/zgc-wei.png"></image>
+								<image wx:else class="achievement-list__content_img" src="../../../assets/images/zgc-yi.png"></image>
+							</view>
+					        <view class="achievement-list__content_lower-drawcar">
+					        	<text>订车</text>
+					        	<image wx:if="{{ item.drawcar_status == '0' }}" class="achievement-list__content_img" src="../../../assets/images/zgc-wei.png"></image>
+					        	<image wx:else class="achievement-list__content_img" src="../../../assets/images/zgc-yi.png"></image>
+					        </view>
+						</view>
+					</view>
+				</view>
+				<view class="achievement-list__item">
+					<text class="achievement-list__item_time">{{ item.time }}</text>
+				</view>
+			</view>
+		</block>
+    </view>
+</template> 

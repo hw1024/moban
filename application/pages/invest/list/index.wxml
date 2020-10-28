@@ -1,0 +1,54 @@
+<view class="list-container"> 
+  <view class="list-box">
+    <view class="nav-left"> 
+      <view class="nav-left_item nav-left__title">
+        <image class="nav-right__items_location" src="../../../assets/images/zgc-location.png"></image><text>{{ cars.address }}</text>
+      </view> 
+      <scroll-view scroll-y="true" scroll-top="{{ offsetTop }}" scroll-with-animation="true" style="height: {{ windowHeight - ownHeight }}px">
+        <block wx:for="{{ brands.items }}" wx:key=""> 
+          <view bindtap="switchRightTab" id="{{ index }}" data-index="{{ index }}" data-id="{{ item.id }}" class="nav-left_item {{curIndex == index ? 'active' : ''}}">
+            {{ item.name }}
+          </view>
+        </block>  
+      </scroll-view>  
+    </view>   
+    <view class="nav-right"> 
+      <scroll-view scroll-y="true" style="height: {{ windowHeight }}px" bindscrolltolower="getMoreCars"> 
+        <view class="nav-right_box" wx:if="{{ cars.items }}">  
+          <block wx:for="{{ cars.items }}" wx:key="">  
+            <view class="nav-right__items weui-flex" data-index="{{ index }}" data-id="{{ item.id }}" data-shop-id="{{ item.shop_id }}" data-select="{{ item.select_num }}" data-payment="{{ item.payment_num }}" data-series="{{ item.series }}" data-image="{{ item.image }}" data-shop="{{ item.shop }}"  data-status="open" bindtap="powerDrawer" >
+              <view>
+                <image class="nav-right__items_img" src="{{ item.image }}" lazy-load="true"></image>
+              </view>  
+              <view class="nav-right__items_content">
+                <view class="nav-right__items_content-item nav-right__items_content-series">{{ item.series }}</view>
+                <view class="nav-right__items_content-item">{{ item.select_num }}人已选中</view>
+                <view class="nav-right__items_content-item">首付：<text class="weui-main__color">{{ item.payment_num }}车币</text></view>
+                <view class="nav-right__items_content-item"><image class="nav-right__items_location" src="../../../assets/images/zgc-location.png"></image>{{ item.shop }}</view>
+              </view>
+            </view>  
+          </block>
+        </view>  
+        <view wx:else>暂无数据</view> 
+      </scroll-view> 
+    </view>  
+  </view>
+</view>
+<view class="drawer-screen" bindtap="powerDrawer" data-status="close" wx:if="{{ showModalStatus }}"></view> 
+<view animation="{{ animationData }}" class="drawer-attr__box" wx:if="{{ showModalStatus }}">
+  <view class="drawer-content">  
+    <view class="drawer-content__title">所选车辆<image class="drawer-content__title_del" src="../../../assets/images/zgc-del.png" bindtap="powerDrawer" data-status="close" wx:if="{{ showModalStatus }}"></image></view>  
+    <view class="drawer-content__box weui-flex">  
+      <view>
+        <image class="drawer-content__box_img" src="{{ cars.selectData.image }}"></image>
+      </view>  
+      <view class="drawer-content__list">
+        <view class="drawer-content__list_item drawer-content__list_item-series">您已选中 [{{ cars.selectData.series }}]</view>
+        <view class="drawer-content__list_item drawer-content__list_item-payment">首付：<text class="weui-main__color">{{ cars.selectData.payment }}车币</text></view>
+        <view class="drawer-content__list_item">{{ cars.selectData.select }}人已选中</view>
+        <view class="drawer-content__list_item">本车辆由 [{{ cars.selectData.shop }}] 提供</view>
+      </view>  
+    </view> 
+    <view class="list-btn" type="default" bindtap="bindForm">点击开始赚车</view>
+  </view>  
+</view> 

@@ -1,0 +1,189 @@
+<style lang="less">
+  .income-top {
+    padding: 30rpx 32rpx 60rpx;
+    background: #ffffff;
+    text-align: center;
+  }
+  .income-top__img {
+    width: 180rpx;
+    height: 180rpx;
+    vertical-align: top;
+  }
+  .income-top__txt {
+    font-size:32rpx;
+    margin-top: 30rpx;
+    line-height:45rpx;
+  }
+  .income-top__lucre {
+    margin-top: 20rpx;
+    font-size: 56rpx;
+    line-height:78rpx;
+    font-weight:bold;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: top;
+    -webkit-align-items: top;
+    align-items: top;
+    justify-content: center;
+  }
+  .income-top__lucre_money {
+    font-size:86rpx;
+    line-height:100rpx;
+    margin-left: 8rpx;
+  }
+  .weui-btn__default {
+    width: 630rpx;
+    margin-top: 60rpx;
+  }
+  .income-top .weui-btn__default_cur {
+    background: #DCDCDC;
+  }
+  .income-list {
+    margin-top: 14rpx;
+    background: #ffffff;
+  }
+  .weui-income {
+    padding: 24rpx 0;
+    margin: 0 32rpx;
+    border-bottom: 1rpx solid #E2E0E3;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+  .weui-income__hd {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+  }
+  .weui-income__title {
+    font-size:32rpx;
+    font-weight:500;
+    line-height:45rpx;
+  }
+  .weui-income__tips {
+    font-size:24rpx;
+    margin-top: 7rpx;
+    color: #999999;
+    line-height:30rpx;
+  }
+  .weui-income__bd {
+    font-size:40rpx;
+    line-height:56rpx;
+    color: #18B215
+  }
+  .weui-income__bd_active {
+    color: #333333;
+  }
+</style>
+<template>
+    <view class="income-container">
+      <view class="income-top">
+        <image class="income-top__img" src="../../assets/images/money.png"></image>
+        <view  class="income-top__txt">可提现收益</view>
+        <view class="income-top__lucre">¥<text class="income-top__lucre_money">{{ money }}</text></view>
+        <block wx:if="{{ status == '1' && money != '0.00'}}">
+          <button class="weui-btn__default" hover-class="none"  type="primary" @tap="cashApplyTap">提现到微信零钱</button>
+        </block>
+        <block wx:elif="{{ status == '1' && money == '0.00'}}">
+          <button class="weui-btn__default weui-btn__default_cur" hover-class="none"  type="primary" >提现到微信零钱</button>
+        </block>
+        <block wx:else>
+          <button class="weui-btn__default weui-btn__default_cur" hover-class="none"  type="primary" >提现审核中</button>
+        </block>
+      </view>
+      <view class="income-list">
+        <view class="weui-title">收益明细</view>
+        <view wx:if="{{ !items.length }}" class="items-empty">暂无数据</view>
+        <view wx:else>
+          <block wx:for="{{ items }}" wx:key="index">
+            <view class="weui-income">
+              <view class="weui-income__hd">
+                <view class="weui-income__title">{{ item.title }}</view>
+                <view class="weui-income__tips">{{ item.create_time }}</view>
+              </view>
+              <view class="weui-income__bd {{ item.type != '1' ? 'weui-income__bd_active' : '' }}">{{ item.money }}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+      <i-toast id="toast" />
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+  export default class Income extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的收益',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      money: '',
+      status: '',
+      items: []
+    }
+
+    methods = {
+      cashApplyTap() {
+        let that = this
+        let params = {money: that.money}
+        that.$parent.HttpService.postCashApply(params).then(res => {
+          let data = res.data
+          if (data.code === 200) {
+            $Toast({ content: '提现审核中' })
+            that.status = 0
+            that.$apply()
+          } else {
+            $Toast({ content: data.msg || '服务器请求失败' })
+          }
+        })
+        that.$apply()
+      }
+    }
+
+    onLoad() {
+      let that = this
+      that.getProfit()
+      that.getData()
+    }
+
+    getProfit() {
+      let that = this
+      that.$parent.HttpService.getMyProfit().then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          that.money = data.data[0].money
+          that.status = data.data[0].button
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    getData() {
+      let that = this
+      let params = {page: 1}
+      that.$parent.HttpService.getProfitDetail(params).then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          that.items = data.data[0].rows
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    onReachBottom(event) {
+      console.log('上拉加载下一页')
+    }
+  }
+</script>

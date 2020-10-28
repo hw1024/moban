@@ -1,0 +1,66 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/invest/list/index",
+    "pages/ranking/index",
+    "pages/user/index",
+    "pages/news/index",
+    "pages/shop/index/index",
+    "pages/shop/list/index",
+    "pages/shop/detail/index",
+    "pages/seecar/index/index",
+    "pages/seecar/authentication/index",
+    "pages/seecar/success/index",
+    "pages/book/index/index",
+    "pages/book/agreement/index",
+    "pages/book/order/index",
+    "pages/book/success/index",
+    "pages/make/index/index",
+    "pages/make/share/index",
+    "pages/make/compose/index",
+    "pages/achievement/seelist/index",
+    "pages/achievement/earnlist/index",
+    "pages/achievement/drawlist/index",
+    "pages/changecar/index",
+    "pages/carcoin/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"dark",
+    "navigationBarBackgroundColor": "#F5D421",
+    "navigationBarTitleText": "赚个车",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#222",
+    "selectedColor": "#222",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+        {
+            "pagePath": "pages/index/index",
+            "text": "首页",
+            "iconPath": "assets/images/icon_home_default.png",
+            "selectedIconPath": "assets/images/icon_home_color.png"
+        },
+        {
+            "pagePath": "pages/ranking/index",
+            "text": "赚车榜",
+            "iconPath": "assets/images/icon_rank_default.png",
+            "selectedIconPath": "assets/images/icon_rank_color.png"
+        },
+        {
+            "pagePath": "pages/user/index",
+            "text": "我的",
+            "iconPath": "assets/images/icon_me_default.png",
+            "selectedIconPath": "assets/images/icon_me_color.png"
+        }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

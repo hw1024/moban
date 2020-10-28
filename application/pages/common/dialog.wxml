@@ -1,0 +1,26 @@
+<template name="diapassView">
+  	<view class="dialog {{ showDialog ? 'dialog-show' : '' }}">
+	    <view class="dialog-mask"></view>
+	    <view class="dialog-container"> 
+	        <view class="dialog-box">
+	        	<view class="dialog-box__title">
+					<view>请输入验证码</view>
+					<button class="dialog-box__title_btn {{ temData.flag ? 'dialog-box__title_btn-active' : '' }}" bindtap="newsendTap" disabled="{{ temData.codeDisable }}">
+						<text>重发发送</text><text hidden="{{ temData.flag }}">({{ temData.phoneCode }}S)</text>
+					</button>
+	        	</view>
+	        	<view class="dialog-box__pwd">
+			    	<input class="dialog-box__pwd_input" type="number" maxlength="6" bindinput="onChangeInput" />
+			      	<block wx:for="{{ [0,1,2,3,4,5] }}" wx:key="">
+			        	<view class="dialog-box__pwd_item">
+			          		<view wx:if="{{ temData.passWordArr[item] == true }}" class="dialog-box__pwd_item-inner">{{ temData.passWordNum[item] }}</view>
+			        	</view>
+			      	</block>
+			    </view>
+	        </view>
+	        <view class="dialog-del" bindtap="dialogDelTap">
+				<image class="dialog-del__image" src="../../../assets/images/zgc-dialog-del.png"></image>
+	        </view>
+	    </view> 
+  	</view>
+</template>

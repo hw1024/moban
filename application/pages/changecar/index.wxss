@@ -1,0 +1,60 @@
+/**index.wxss**/
+.changecar-top {
+	background: #fff;
+}
+.changecar-voucher .weui-grid {
+	padding: 24rpx 0;
+	line-height: 1.2;
+}
+.changecar-voucher .weui-grid__title {
+	font-size: 24rpx;
+	color: #666;
+}
+.changecar-voucher__box {
+	border-top: 1rpx solid #DDDDDD;
+}
+.changecar-voucher__box .weui-cell {
+	padding: 0 24rpx;
+}
+.changecar-voucher__series {
+	font-size: 30rpx;
+	margin-bottom: 20rpx;
+}
+.changecar-voucher__box_img {
+	width: 240rpx;
+	height: 200rpx;
+	vertical-align: middle;
+	margin-right:20rpx;
+}
+.changecar-voucher__shop {
+	font-size: 26rpx;
+	color: #666;
+}
+.changecar-voucher__shop_icon {
+	width: 26rpx;
+	height: 26rpx;
+	margin-right: 6rpx;
+	vertical-align: bottom;
+}
+.changecar-voucher .weui-grid:last-child {
+	border-right: none;
+}
+.changecar-item {
+	background: #fff;
+	margin-top: 10rpx;
+	position: relative;
+}
+.changecar-item .changecar-voucher__box {
+	border-top: none;
+}
+.changecar-btn {
+	font-size: 24rpx;
+	color: #666;
+	position: absolute;
+	top: 13rpx;
+	right: 24rpx;
+	padding: 14rpx;
+	border: 1rpx solid #F5D421;
+	border-radius: 100rpx;
+}
+

@@ -1,0 +1,85 @@
+<style lang="less">
+   page{
+    background: #ffffff;
+    -webkit-overflow-scrolling: touch;
+  }
+</style>
+<template>
+    <view class="record-container">
+      <view wx:if="{{ !items.length }}" class="items-empty">暂无数据</view>
+      <view wx:else class="record-list">
+        <block wx:for="{{ items }}" wx:key="index">
+          <view class="weui-media" @tap="navigateTo('/pages/visitor/detail', '{{ item.id}}')">
+            <view class="weui-media__tips">¥{{ item.lore.price }}</view>
+            <view class="weui-media__hd">
+              <image class="weui-media__thumb" src="{{ item.lore.cover || '../../assets/images/cover_default.png' }}" mode="aspectFill"></image>
+            </view>
+            <view class="weui-media__bd">
+              <view class="weui-media__title">{{ item.lore.title }}</view>
+              <view class="weui-media__info">
+                <text class="weui-media__meta">{{ item.lore.shipment }}人获得知识</text>
+                <block wx:if="{{ item.lore.is_copyright == 1 }}">
+                  <view wx:if="{{ item.digital_copyright }}" class="weui-media__meta weui-media__bate_btn" @tap.stop="navigateTo('/pages/copyright/index')">数字版权-{{ item.digital_copyright }}</view>
+                  <view wx:else class="weui-media__meta weui-media__bate"><text>数字版权</text><text class="weui-circle"></text><text>认证中</text></view>
+                </block>
+              </view>
+            </view>
+          </view>
+        </block>
+        <i-toast id="toast" />
+      </view>
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+
+  export default class Record extends wepy.page {
+    config = {
+      navigationBarTitleText: '浏览记录',
+      enablePullDownRefresh: true,
+      backgroundTextStyle: 'dark',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      items: []
+    }
+
+    methods = {
+      navigateTo(path, id) {
+        let that = this
+        that.$parent.WxService.navigateTo(path, {id: id})
+      }
+    }
+
+    onLoad() {
+      let that = this
+      that.getData()
+    }
+
+    getData() {
+      let that = this
+      that.$parent.HttpService.getUidLogData().then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          that.items = data.data
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    onPullDownRefresh() {
+      let that = this
+      that.onLoad()
+      setTimeout(() => {
+        wepy.stopPullDownRefresh()
+        wepy.hideNavigationBarLoading()
+      }, 3000)
+    }
+  }
+</script>

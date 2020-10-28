@@ -1,0 +1,354 @@
+<style lang="less">
+  .home-container {
+    width: 100%;
+    height: 100%;
+  }
+  .startup-box {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    background-color: #ffffff;
+  }
+  .startup-suggest {
+    padding-top: 188rpx;
+    font-size: 36rpx;
+  }
+  .startup-suggest__logo {
+    width: 329rpx;
+    height: 94rpx; 
+    vertical-align: top;
+  }
+  .startup-suggest__title {
+    font-size: 70rpx;
+    font-weight: 500;
+    line-height: 98rpx;
+    letter-spacing: 12rpx;
+    margin-top: 43rpx;
+  }
+  .startup-suggest__text {
+    font-size: 36rpx;
+    color: #666;
+    line-height: 50rpx;
+    letter-spacing: 2rpx;
+  }
+  .startup-route {
+    padding-top: 209rpx;
+  }
+  .startup-route .weui-btn__default {
+    width: 496rpx;
+    font-size: 34rpx;
+  }
+  .startup-route__tips {
+    line-height: 42rpx;
+    font-size: 30rpx;
+    color: #666666;
+    margin-top: 20rpx;
+  }
+  .home-top .user-store {
+    margin-top: 2rpx;
+  }
+  .home-top .user-store__title {
+    font-size: 44rpx;
+    font-weight: 600;
+    line-height: 62rpx;
+    margin-right: 22rpx;
+  }
+  .home-top .user-store__set {
+    width:110rpx;
+    height:44rpx;
+    background:#F7F7F7;
+    border-radius:22rpx;
+    justify-content: center;
+    border:1px solid #EFEFEF;
+  }
+  .home-top .user-store__set_icon {
+    width: 20rpx;
+    height: 20rpx;
+    margin-right: 9rpx;
+    vertical-align: top;
+  }
+  .home-top .user-store__set_txt {
+    font-size:24rpx;
+    color: #666666;
+    line-height:33rpx;
+  }
+  .home-list {
+    margin-top: 1rpx;
+  }
+  .home-list .digital-copyright {
+    top: 30rpx;
+    right: 32rpx;
+  }
+  .weui-btn__create {
+    width: 292rpx;
+    position: absolute;
+    bottom: -44rpx;
+    left: 50%;
+    margin-left: -146rpx;
+  }
+</style>
+<template>
+    <view class="home-container">
+      <block wx:if="{{ isLogin }}">
+        <view class="home-top">
+          <view class="home-top__bg"></view>
+          <view class="user-info weui-flex__align">
+            <view>
+              <image class="user-info__avatar" src="{{ avatarUrl || '../../assets/images/user_default.png' }}"></image>
+            </view>
+            <view>
+              <view class="user-info__nickname">{{ nickName || '链我' }}的</view>
+              <view class="user-store weui-flex__align">
+                <view class="user-store__title">{{ storeName }}</view>
+                <view class="user-store__set weui-flex__align" @tap="navigateEditTo('/pages/store/revise')">
+                  <image class="user-store__set_icon" src="../../assets/images/icon_bianji.png"></image>
+                  <text class="user-store__set_txt">编辑</text>
+                </view>
+              </view>
+            </view>
+            <button class="weui-btn__default weui-btn__create" type="primary" @tap="navigateTo('/pages/home/add')">开始创作</button>
+            <view class="user-share weui-flex__align" @tap="handleOpen">
+              <image class="user-share__icon" src="../../assets/images/index_share.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="home-list">
+          <view wx:if="{{ !items.length }}" class="items-empty">暂无数据</view>
+          <scroll-view wx:else scroll-y>
+            <block wx:for="{{ items }}" wx:key="index">
+              <view class="index-media" @tap="navigateTo('/pages/home/detail', '{{ item.id}}')">
+                <view class="index-media__hd">
+                  <image class="index-media__thumb" src="{{ (item.show ? item.cover : '../../assets/images/cover_default.png') || '../../assets/images/upload_btn.png' }}" mode="aspectFill" lazy-load></image>
+                </view>
+                <view class="index-media__bd">
+                  <view class="index-media__title">{{ item.title }}</view>
+                  <view class="index-media__info">
+                    <view wx:if="{{ item.price != '0.00' }}" class="index-media__tips">¥{{ item.price }}</view>
+                    <view wx:else class="index-media__free">免费</view>
+                    <view class="index-media__meta" wx:if="{{ item.status == '2'}}">{{ item.create_time }}</view>
+                  </view>
+                  <view class="index-media__list weui-flex__align">
+                    <view class="item weui-flex__align">
+                      <image class="item-icon" src="../../assets/images/icon_share1.png"></image>
+                      <text class="item-txt">{{ item.share }}</text>
+                    </view>
+                    <view class="item-line"></view>
+                    <view class="item weui-flex__align">
+                      <image class="item-icon" src="../../assets/images/browse.png"></image>
+                      <text class="item-txt">{{ item.clicks }}</text>
+                    </view>
+                    <view class="item-line"></view>
+                    <view class="item weui-flex__align">
+                      <image class="item-icon" src="../../assets/images/cat.png"></image>
+                      <text class="item-txt">{{ item.shipment }}</text>
+                    </view>
+                  </view>
+                </view>
+                <view wx:if="{{ item.status == '1' }}" class="index-examine">
+                  <image class="index-examine__icon" src="../../assets/images/check_load.png"></image>
+                </view>
+                <view wx:elif="{{ item.status == '3' }}" class="index-examine">
+                  <image class="index-examine__icon" src="../../assets/images/check_del.png"></image>
+                </view>
+                <view wx:elif="{{ item.status == '4' }}" class="index-examine">
+                  <image class="index-examine__icon" src="../../assets/images/check_fail.png"></image>
+                </view>
+                <block wx:if="{{ item.is_copyright == '1' }}">
+                  <view class="digital-copyright">
+                    <view wx:if="{{ item.digital_copyright }}" class="digital-copyright__info" @tap="navigateTo('/pages/copyright/index', '{{ essay_id }}')">{{ item.digital_copyright }}</view>
+                    <view wx:else class="digital-copyright__info">认证中…</view>
+                    <view class="digital-copyright__lower weui-flex__align">
+                      <image wx:if="{{ item.digital_copyright }}" class="digital_copyright__icon" src="../../assets/images/logo2.png"></image>
+                      <image wx:else class="digital_copyright__icon" src="../../assets/images/logo1.png"></image>
+                      <text>数字版权</text>
+                    </view>
+                  </view>
+                </block>
+              </view>
+            </block>
+          </scroll-view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="startup-box">
+          <view class="startup-suggest">
+            <image class="startup-suggest__logo" src="../../assets/images/logo.png"></image>
+            <view class="startup-suggest__title">知识小店</view>
+            <view class="startup-suggest__text"><text class="mr-20">创作知识</text><text>收获价值</text></view>
+          </view>
+          <view class="startup-route">
+            <block wx:if="{{canIUse}}">
+              <button class="weui-btn__default" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">开店</button>
+            </block>
+            <block wx:else>
+              <button class="weui-btn__default" type="primary">请升级微信版本</button>
+            </block>
+            <view class="startup-route__tips">我们提供数字版权，保护您的原</view>
+          </view>
+        </view>
+      </block>
+      <i-toast id="toast" />
+      <i-action-sheet visible="{{ visible }}" actions="{{ actions }}" show-cancel bind:cancel="handleCancel" bind:click="handleClickItem" />
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+  const user = require('../../service/user.js')
+  const util = require('../../utils/util.js')
+
+  export default class Home extends wepy.page {
+    config = {
+      navigationBarTitleText: '链我',
+      navigationBarBackgroundColor: '#00B615',
+      navigationBarTextStyle: 'white',
+      'usingComponents': {
+        'i-action-sheet': '../../components/action-sheet/index',
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      canIUse: wepy.canIUse('button.open-type.getUserInfo'),
+      height: '',
+      avatarUrl: '',
+      nickName: '',
+      storeName: '',
+      storeId: '',
+      userId: '',
+      visible: false,
+      actions: [
+        {
+          name: '分享给好友',
+          openType: 'share'
+        },
+        {
+          name: '生成图片'
+        }
+      ],
+      isLogin: false,
+      items: []
+    }
+
+    methods = {
+      navigateEditTo(path) {
+        let that = this
+        that.$parent.WxService.navigateTo(path, {
+          user_name: that.nickName,
+          store_name: that.storeName,
+          store_id: that.storeId
+        })
+      },
+      navigateTo(path, id) {
+        let that = this
+        that.$parent.WxService.navigateTo(path, {id: id})
+      },
+      handleOpen () {
+        let that = this
+        that.visible = true
+        that.$apply()
+      },
+      handleCancel () {
+        let that = this
+        that.visible = false
+        that.$apply()
+      },
+      handleClickItem ({ detail }) {
+        let that = this
+        let index = detail.index + 1
+        that.visible = false
+        that.$apply()
+        if (index === 2) {
+          that.$parent.WxService.navigateTo('/pages/home/share', {id: that.storeId})
+        }
+      },
+      bindGetUserInfo(e) {
+        const that = this
+        user.loginByWeixin(that.$parent).then(res => {
+          const data = res.data
+          if (data.code === 200) {
+            that.$parent.globalData.userInfo = data.data.userInfo
+            that.$parent.globalData.token = data.data.token
+            if (data.data.store_id) {
+              wepy.setStorageSync('storeId', data.data.store_id)
+              that.onLoad()
+            } else {
+              that.$parent.WxService.navigateTo('/pages/store/set')
+            }
+          } else {
+            $Toast({ content: data.msg || '服务器请求失败' })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    }
+  
+    onLoad() {
+      let that = this
+      let userInfo = wepy.getStorageSync('userInfo')
+      let storeId = wepy.getStorageSync('storeId')
+      let token = wepy.getStorageSync('token')
+      wepy.getSystemInfo({
+        success: (res) => {
+          that.height = res.screenHeight
+          that.$apply()
+        }
+      })
+      if (userInfo && token && storeId) {
+        that.$parent.globalData.userInfo = userInfo
+        that.$parent.globalData.token = token
+        that.$parent.globalData.storeId = storeId
+        that.storeId = that.$parent.globalData.storeId
+        that.userId = that.$parent.globalData.userInfo.id
+        that.isLogin = true
+        that.$apply()
+        that.getData(that.storeId, that.userId)
+      }
+    }
+
+    getData(storesId, userId) {
+      let that = this
+      const params = { store_id: storesId, user_id: userId }
+      that.$parent.HttpService.getStoreData(params).then(res => {
+        const data = res.data
+        if (data.code === 200) {
+          that.avatarUrl = data.data.user.avatar
+          that.nickName = data.data.user.nickname
+          that.storeName = data.data.store[0].store_name
+          that.items = data.data.lore
+          that.$apply()
+          that.showImg()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    onPageScroll() {
+      util.debounce(this.showImg())
+    }
+
+    showImg() {
+      let that = this
+      wepy.createSelectorQuery().selectAll('.index-media__thumb').boundingClientRect((ret) => {
+        let height = that.height
+        ret.forEach((item, index) => {
+          if (item.top < height) {
+            that.items[index].show = true
+            that.$apply()
+          }
+        })
+      }).exec()
+    }
+
+    onShareAppMessage() {
+      return {
+        title: '链我-知识小店 创作知识 收获价值',
+        path: '/pages/visitor/index?store_id=' + `${this.storeId}` + '&user_id=' + `${this.userId}`
+      }
+    }
+  }
+</script>

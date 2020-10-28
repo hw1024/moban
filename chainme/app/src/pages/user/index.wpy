@@ -1,0 +1,176 @@
+<style lang="less">
+  .user-container {
+    position: relative;
+  }
+  .user-islogin {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+  }
+  .user-info {
+    padding: 30rpx 32rpx 44rpx;
+    background: #ffffff;
+  }
+  .user-info .user-info__avatar {
+    width:123rpx;
+    height:123rpx;
+    border-radius: 123rpx;
+    margin-right: 20rpx;
+  }
+  .user-info .user-info__nickname {
+    font-size:44rpx;
+    font-weight:500;
+    line-height:62rpx;
+  }
+  .weui-btn__init {
+    font-size: 30rpx;
+  }
+  .user-footer {
+    position: fixed;
+    bottom: 60rpx;
+    left: 0;
+    right: 0;
+  }
+  .user-footer__inner {
+    color: #999999;
+    font-size: 22rpx;
+  }
+  .user-footer__inner .tips {
+    justify-content: center;
+  }
+</style>
+<template>
+  <view class="user-container">
+    <button wx:if="{{ !isLogin }}" class="user-islogin weui-btn__init" hover-class="none" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"></button>
+    <view class="user-info weui-flex__align">
+      <block wx:if="{{ isLogin }}">
+        <image class="user-info__avatar" src="{{ infos.avatarUrl }}"></image>
+        <text class="user-info__nickname">{{ infos.nickName }}</text>
+      </block>
+      <block wx:elif="{{ canIUse }}">
+        <button class="weui-btn__init weui-flex__align" hover-class="none" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+          <image class="user-info__avatar" src="../../assets/images/user_default.png"></image>
+          <text class="user-info__nickname">登录</text>
+        </button>
+      </block>
+      <block wx:else>
+        <image class="user-info__avatar" src="../../assets/images/user_default.png"></image>
+        <text class="user-info__nickname">请升级微信版本</text>
+      </block>
+    </view>
+    <view class="weui-cells">
+      <view class="weui-cell" @tap="navigateTo('/pages/knowledge/index')">
+        <view class="weui-cell__bd">
+          <image class="weui-cell__icon" src="../../assets/images/icon_me_know.png"></image>
+          <text>已获得的知识</text>
+        </view>
+        <view class="weui-cell__ft"></view>
+      </view>
+      <view class="weui-cell" @tap="navigateTo('/pages/record/index')">
+        <view class="weui-cell__bd">
+          <image class="weui-cell__icon" src="../../assets/images/icon_me_rec.png"></image>
+          <text>浏览记录</text>
+          </view>
+        <view class="weui-cell__ft"></view>
+      </view>
+      <view class="weui-cell" @tap="navigateTo('/pages/income/index')">
+        <view class="weui-cell__bd">
+          <image class="weui-cell__icon" src="../../assets/images/icon_me_pay.png"></image>
+          <text>我的收益</text>
+        </view>
+        <view class="weui-cell__ft">{{ infos.real_money }}</view>
+      </view>
+    </view>
+    <!-- <view class="weui-cells">
+      <view class="weui-cell" @tap="navigateTo('/pages/user/bankset')">
+        <view class="weui-cell__bd">
+          <image class="weui-cell__icon" src="../../assets/images/icon_me_rz.png"></image>
+          <text>实名认证</text>
+        </view>
+        <view class="weui-cell__ft">未认证</view>
+      </view>
+    </view> -->
+    <view class="weui-cells">
+      <button class="weui-cell weui-btn__init" hover-class="none" open-type="contact" session-from="weapp">
+        <view class="weui-cell__bd">
+          <image class="weui-cell__icon" src="../../assets/images/icon_me_kf.png"></image>
+          <text>联系客服</text>
+        </view>
+        <view class="weui-cell__ft"></view>
+      </button>
+    </view>
+    <view class="user-footer">
+      <view class="user-footer__inner">
+          <text class="weui-flex__align tips">版权所有 链我（北京）科技有限公司</text>
+      </view>
+    </view>
+    <i-toast id="toast" />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const user = require('../../service/user.js')
+  const { $Toast } = require('../../components/base/index')
+  export default class User extends wepy.page {
+    config = {
+      navigationBarTitleText: '链我',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      canIUse: wepy.canIUse('button.open-type.getUserInfo'),
+      isLogin: false,
+      infos: {}
+    }
+
+    methods = {
+      navigateTo(path) {
+        this.$parent.WxService.navigateTo(path)
+      },
+      bindGetUserInfo(e) {
+        const that = this
+        user.loginByWeixin(that.$parent).then(res => {
+          that.onLoad()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    }
+
+    onLoad() {
+      let that = this
+      let userInfo = wepy.getStorageSync('userInfo')
+      let token = wepy.getStorageSync('token')
+      if (userInfo && token) {
+        that.getData()
+        that.$parent.globalData.userInfo = userInfo
+        that.$parent.globalData.token = token
+        that.isLogin = true
+        that.avatarUrl = that.$parent.globalData.userInfo.avatarUrl
+        that.nickName = that.$parent.globalData.userInfo.nickName
+        that.$apply()
+      }
+    }
+
+    getData() {
+      let that = this
+      that.$parent.HttpService.getMyhomepage().then(res => {
+        const data = res.data
+        if (data.code === 200) {
+          that.infos = data.data[0]
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+  }
+</script>

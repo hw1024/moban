@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<view class="changecar-voucher changecar-top">
+	<view class="weui-cell">
+        <view class="weui-cell__bd">我正在赚个车</view>
+    </view>
+	<view class="changecar-voucher__box">
+		<view class="weui-cell" data-id="{{ changecars.default.id }}" data-shop-id="{{ changecars.default.shop_id }}">
+            <view class="weui-cell__hd">
+            	<image class="changecar-voucher__box_img" src="{{ changecars.default.image }}"></image>
+            </view>
+            <view class="weui-cell__bd">
+            	<view class="changecar-voucher__series">{{ changecars.default.series }}</view>
+            	<view class="changecar-voucher__shop">
+            		<image class="changecar-voucher__shop_icon" src="../../assets/images/zgc-location.png"></image><text>{{ changecars.default.shop }}</text>
+            	</view>
+            </view>
+        </view>
+	</view>
+	<view class="weui-grids weui-flex">
+        <view class="weui-grid" data-path="/pages/seecar/index/index" bindtap="navigateTo">
+        	<view wx:if="{{ changecars.default.seecar_status == '0' }}" class="weui-grid__title weui-main__color">到店看车</view>
+        	<view wx:elif="{{ changecars.default.seecar_status == '1' }}" class="weui-grid__title">已预约看车</view>
+        	<view wx:else class="weui-grid__title">已到店看车</view>
+        </view>
+        <view class="weui-grid" data-path="/pages/book/index/index" bindtap="navigateTo">
+        	<view wx:if="{{ changecars.default.drawcar_status == '0' }}" class="weui-grid__title weui-main__color">订车</view>
+        	<view wx:else class="weui-grid__title">已订车</view>
+        </view>
+	</view>
+</view>
+<view class="changecar-voucher" wx:if="{{ !!changecars.items.length }}">
+    <block wx:for="{{ changecars.items }}" wx:key="*this">
+    	<view class="changecar-item">
+    		<view class="changecar-voucher__box">
+				<view class="weui-cell">
+	                <view class="weui-cell__hd">
+	                	<image class="changecar-voucher__box_img" src="{{ item.image }}"></image>
+	                </view>
+	                <view class="weui-cell__bd">
+	                	<view class="changecar-voucher__series">{{ item.series }}</view>
+	                	<view class="changecar-voucher__shop">
+	                		<image class="changecar-voucher__shop_icon" src="../../assets/images/zgc-location.png"></image><text>{{ item.shop }}</text>
+	                	</view>
+	                </view>
+	            </view>
+			</view>
+			<view class="weui-grids weui-flex">
+		        <view class="weui-grid" data-path="/pages/seecar/index/index" bindtap="navigateTo">
+		        	<view wx:if="{{ item.seecar_status == '0' }}" class="weui-grid__title weui-main__color">到店看车</view>
+		        	<view wx:elif="{{ item.seecar_status == '1' }}" class="weui-grid__title">已预约看车</view>
+		        	<view wx:else class="weui-grid__title">已到店看车</view>
+		        </view>
+		        <view class="weui-grid" data-path="/pages/book/index/index" bindtap="navigateTo">
+		        	<view wx:if="{{ item.drawcar_status == '0' }}" class="weui-grid__title weui-main__color">订车</view>
+		        	<view wx:else class="weui-grid__title">已订车</view>
+		        </view>
+			</view>
+			<view  data-id="{{ item.id }}" data-shop-id="{{ item.shop_id }}" class="changecar-btn" bindtap="changeCar">更换成此车辆</view>
+    	</view>
+	</block>
+</view>

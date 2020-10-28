@@ -1,0 +1,11 @@
+<template name="prompt">
+	<view class="prompt-container {{ prompt.style == 'center' ? 'prompt-container_active' : '' }}" hidden="{{ prompt.hidden }}">
+	    <view class="prompt-message">
+	        <image src="{{ prompt.icon || '../../../assets/images/zgc-empty.png' }}" class="prompt-icon" />
+	        <view class="prompt-text">{{ prompt.text || '暂时没有相关数据' }}</view>
+	        <view class="prompt-button-area" wx:if="{{ prompt.buttons && !!prompt.buttons.length }}">
+	        	<button type="default" class="prompt-button" wx:for="{{ prompt.buttons }}" wx:key="" bindtap="{{ item.bindtap }}" data-index="{{ index }}">{{ item.text }}</button>
+	        </view>
+	    </view>
+	</view>
+</template>

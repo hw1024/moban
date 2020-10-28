@@ -1,0 +1,9 @@
+/**index.wxss**/
+.success-list .weui-cell__ft_in-access {
+	padding-right: 30rpx;
+}
+.success-list .weui-cell__ft_in-access::after {
+    height: 16rpx;
+    width: 16rpx;
+    margin-top:-10rpx;
+}

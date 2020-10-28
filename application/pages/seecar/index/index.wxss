@@ -1,0 +1,113 @@
+/**index.wxss**/
+.seecar-top {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #fff;
+	font-size: 30rpx;
+	padding: 66rpx 0 40rpx;
+}
+.seecar-top__status {
+	display: flex;
+	align-items: center;
+	font-size: 48rpx;
+	margin-bottom: 40rpx;
+}
+.seecar-top__status_txt {
+	margin-left: 22rpx;
+}
+.seecar-top__code {
+	margin: 22rpx 0 16rpx;
+}
+.seecar-top__code_image {
+	width: 230rpx;
+	height: 230rpx;
+}
+.seecar-top__prize, .seecar-top__time {
+	font-size: 24rpx;
+	color: #666;
+}
+.seecar-top__time {
+	margin-top: 18rpx;
+}
+.seecar-list {
+	background: #fff;
+	margin-top: 10rpx;
+	padding: 0 24rpx;
+}
+.seecar-list .weui-cell {
+	padding: 16rpx 0;
+}
+.seecar-list .weui-cell__bd {
+	font-size: 28rpx;
+}
+.seecar-list .weui-cell__ft {
+	color: #666;
+}
+.seecar-list__item {
+	display: flex;
+	align-items: center;
+	border-bottom: 1rpx solid #D8D8D8;
+}
+.seecar-list__item:last-child {
+	border-bottom: none;
+}
+.seecar-list__image {
+	width: 60rpx;
+	height: 60rpx;
+	margin-right: 20rpx;
+}
+.seecar-lower {
+	font-size: 28rpx;
+	text-align: center;
+}
+.seecar-lower__form {
+	justify-content: space-between;
+	align-content: center;
+	padding: 0 24rpx;
+	margin-top: 16rpx;
+}
+.seecar-lower__text {
+	margin-top: 20rpx;
+}
+.seecar-lower__form_input {
+	text-align: left;
+	background: #FFFFFF;
+	border: 1rpx solid #F5D421;
+	border-radius: 8rpx;
+	width: 490rpx;
+	height: 80rpx;
+	color: #999;
+	font-size: 22rpx;
+	line-height: 80rpx;
+	padding-left: 20rpx;
+}
+.seecar-lower .seecar-lower__form_btn {
+	font-size: 30rpx;
+	height: 80rpx;
+	padding: 0;
+	margin: 0;
+	box-sizing: content-box;
+	line-height: 80rpx;
+	width: 175rpx;
+	background: #F5D421;
+	border: 1rpx solid #F5D421;
+	border-radius: 8rpx;
+}
+.seecar-lower button[disabled] {
+	color: #666;
+}
+.seecar-lower .seecar-lower__form_btn:after {
+	display: none;
+}
+.seecar-fixed__btn {
+	width: 100%;
+	height: 110rpx;
+	position: fixed;
+	bottom: 0;
+	background-color: #f5d421;
+	text-align: center;
+	font-size: 36rpx;
+	line-height: 110rpx;
+	z-index: 1;
+}

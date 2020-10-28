@@ -1,0 +1,89 @@
+<style lang="less">
+.bankset-container {
+  width: 100%;
+  height: 100%;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+.weui-btn__default {
+  width: 630rpx;
+  margin-top: 70rpx;
+}
+.weui-section {
+  margin-top: 40rpx;
+}
+</style>
+<template>
+  <view class="bankset-container">
+    <form bindsubmit="formSubmit">
+      <view class="weui-section">
+        <view class="weui-section__title">真实姓名</view>
+        <input class="weui-section__input" name="name" placeholder="" bindinput="realNameTap"/>
+      </view>
+      <view class="weui-section">
+        <view class="weui-section__title">身份证号</view>
+        <input class="weui-section__input" name="card_id" placeholder="" bindinput="cardIdTap"/>
+      </view>
+      <button class="weui-btn__default {{ realName && cardId ? '' : 'weui-btn__disables' }}" hover-class="none"  type="primary" formType="submit">提交认证信息</button>
+    </form>
+    <i-toast id="toast" />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+  export default class Bankset extends wepy.page {
+    config = {
+      navigationBarTitleText: '实名认证',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      id: '',
+      realName: null,
+      cardId: null
+    }
+
+    methods = {
+      realNameTap(e) {
+        e.detail.value ? this.realName = e.detail.value : this.realName = null
+        this.$apply()
+      },
+      cardIdTap(e) {
+        e.detail.value ? this.cardId = e.detail.value : this.cardId = null
+        this.$apply()
+      },
+      formSubmit(e) {
+        let that = this
+        const [realName, cardId] = [this.data.realName, this.data.cardId]
+        if (realName && cardId) {
+          let params = e.detail.value
+          params.id = that.id
+          that.$parent.HttpService.postIdVerification(params).then(res => {
+            const data = res.data
+            if (data.code === 200) {
+              that.$parent.WxService.navigateTo('/pages/user/success')
+            } else {
+              $Toast({ content: data.msg || '服务器请求失败' })
+            }
+          })
+        }
+      }
+    }
+
+    onLoad() {
+      let that = this
+      let userInfo = wepy.getStorageSync('userInfo')
+      if (userInfo) {
+        that.$parent.globalData.userInfo = userInfo
+        that.id = that.$parent.globalData.userInfo.id
+        that.$apply()
+      }
+    }
+  }
+</script>

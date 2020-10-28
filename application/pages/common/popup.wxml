@@ -1,0 +1,16 @@
+<template name="dialog">
+	<view wx:if="{{ showModal }}">
+	    <view class="private-mask" bindtap="hideModal" catchtouchmove="preventTouchMove"></view>
+	    <view class="private-dialog" animation="{{ animationData }}">
+	    	<view class="private-dialog__title">{{ dialog.title }}</view>
+	        <view class="private-dialog__content">
+				<view>确认后我们会收到您的申请，平台审核通过后即返还支付的订金。</view>
+				<view class="private-dialog__content_item">退回订金：<text class="weui-main__color">20000元</text></view>
+				<view class="private-dialog__content_item">结算期T+1工作日</view>
+	        </view>
+	        <view class="private-dialog__footer" style="border-top:none;">
+			    <view class="private-dialog__btn_link" bindtap="onConfirm">{{ dialog.btn_title }}</view>
+			 </view>
+	    </view>
+	</view>
+</template>

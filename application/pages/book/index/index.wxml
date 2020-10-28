@@ -1,0 +1,42 @@
+<!--index.wxml-->
+<view class="book-container">
+    <view class="weui-cell book-title">
+        <view class="weui-cell__bd" data-path="/pages/book/success/index" bindtap="navigateTo">订单号：{{ items.order_nember }}</view>
+    </view>
+    <view class="book-info weui-flex">
+		<view class="book-info__item">
+			<image class="book-info__item_image" src=" {{ items.car_image }}"></image>
+		</view>
+		<view class="book-info__item">
+			<view class="book-info__item_text">{{ items.car_description}}</view>
+			<view class="weui-main__color">订金：¥{{ items.car_order_money }}</view>
+		</view>
+    </view>
+    <view class="book-lower">
+		<view class="book-lower__title" data-path="/pages/book/agreement/index" bindtap="navigateTo">
+			<image class="book-lower__title_icon" src="../../../assets/images/zgc-xz.png"></image><text>同意<text class="weui-main__color">《订车订金服务协议》</text></text>
+		</view>
+		<view class="book-lower__discount">
+			<view class="book-lower__discount_item book-lower__discount_select">
+				<view>用{{ items.discount_coin }}车币可以抵订金{{ items.discount_coin / 10 }}元</view>
+				<view class="book-lower__discount_switch"><switch bindchange="switchChange" color="#F5D421"/></view>
+			</view>
+			<view hidden="{{ switch_status ? true : false }}">不使用订金优惠</view>
+			<view hidden="{{ switch_status ? false : true }}" class="book-lower__discount_item">
+				<view>订金优惠</view><view>-¥{{ money_show }}</view>
+			</view>
+		</view>
+		<view class="book-lower__explain">
+			<view class="book-lower__explain_item">订车说明：</view>
+			<view class="book-lower__explain_item">1.用户支付车辆订金后可获得车币奖励；</view>
+			<view class="book-lower__explain_item">2.用户支付车辆订金后开始锁定，锁定期结束后全额返还定金；</view>
+			<view class="book-lower__explain_item">3.订车过程中除支付车辆订金外不收取任何费用；</view>
+			<view class="book-lower__explain_item">4.如订车过程中有任何疑问，请拨打<text class="weui-main__color">010-2366788</text>咨询。</view>
+		</view>
+    </view>
+    <view class="book-form weui-flex">
+		<view class="book-form__money">实付款：¥{{ items.car_order_money - money_show }}</view>
+		<view class="book-form__btn" data-money="{{ items.car_order_money - money_show }}" bindtap="paymentTap">继续支付</view>
+    </view>
+</view>
+

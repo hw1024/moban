@@ -1,0 +1,112 @@
+<style lang="less">
+  .editor-container {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+  }
+  .editor-box {
+    padding: 20rpx 32rpx 0;
+  }
+  .area-box {
+    width: 100%; 
+    background: #fff;
+  }
+  .word-text {
+    width: 100%;
+    height: 588rpx;
+    color: #333333;
+    font-size: 34rpx;
+    line-height: 48rpx;
+  }
+  .word-limit {
+    justify-content: space-between;
+    font-size: 30rpx;
+    line-height: 42rpx;
+    padding: 20rpx 32rpx;
+    border-top: 1rpx solid #E2E0E3;
+    color: #666666;
+  }
+  .editor-complete {
+    font-size: 34rpx;
+    line-height: 48rpx;
+    color: #18B215;
+  }
+</style>
+<template>
+  <view class="editor-container">
+    <view class="editor-box">
+      <view class="area-box">
+        <textarea class="word-text" name="content" placeholder="请输入文字内容" maxlength="{{ noteMaxLen }}" placeholder-style="color: #999999;" bindinput="bindWordLimit" value="{{ content }}" auto-focus show-confirm-bar=""/>
+      </view>
+    </view>
+    <view class="word-limit weui-flex__align">
+      <view>{{currentNoteLen || 0}}/{{noteMaxLen}}</view>
+      <view class="editor-complete" @tap="editorComplete('{{content}}')">完成</view>
+    </view>
+    <i-toast id="toast" />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+const { $Toast } = require('../../components/base/index')
+export default class Editor extends wepy.page {
+  config = {
+    navigationBarTitleText: '添加文字',
+    'usingComponents': {
+      'i-toast': '../../components/toast/index'
+    }
+  }
+
+  data = {
+    noteMaxLen: 5000,
+    currentNoteLen: 0,
+    content: '',
+    curArray: [],
+    isRevise: false,
+    curIndex: 0
+  }
+
+  methods = {
+    bindWordLimit(e) {
+      let that = this
+      let value = e.detail.value
+      let len = parseInt(value.length)
+      if (len > that.data.noteMaxLen) return
+      that.currentNoteLen = len
+      that.content = value
+      that.$apply()
+    },
+    editorComplete(content) {
+      let that = this
+      if (content) {
+        let pages = that.getCurrentPages()
+        let prevPage = pages[pages.length - 2]
+        let curArray = prevPage.data.items
+        let contentArray = prevPage.data.contents
+        let addText = {type: 'text', value: content}
+        console.log(that.data.curIndex)
+        if (!that.isRevise) {
+          curArray.splice(that.data.curIndex, 0, addText)
+          contentArray.splice(that.data.curIndex, 0, addText)
+        } else {
+          curArray.splice(that.data.curIndex, 1, addText)
+          contentArray.splice(that.data.curIndex, 1, addText)
+        }
+        that.$parent.WxService.navigateBack({delta: 1})
+      } else {
+        $Toast({ content: '内容不能为空' })
+      }
+    }
+  }
+
+  onLoad(options) {
+    let that = this
+    if (options.value) {
+      that.isRevise = true
+      that.content = decodeURIComponent(options.value)
+    }
+    that.curIndex = options.curIndex
+    that.$apply()
+  }
+}
+</script>

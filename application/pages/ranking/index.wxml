@@ -1,0 +1,57 @@
+<!--index.wxml-->
+<import src="../common/network.wxml"/>
+<template is="network" data="{{ networkStatus }}"/>
+
+<view wx:if="{{ !!networkStatus }}">
+	<scroll-view class="ranking-box" scroll-y="true" bindscrolltolower="getMore" bindscroll="rankingscroll" style="height: {{ windowHeight }}px">
+		<block wx:for="{{ rankings.items }}" wx:key="">
+			<view class="weui-flex ranking-list ranking_{{ item.id  }}" data-id="{{ item.id }}" data-index="{{ index }}">
+				<view class="ranking-list__item ranking-list__item_one">
+					<block wx:if="{{ item.id == 1 }}" >
+						<image class="ranking-list__item_icon" src="../../assets/images/zgc-rank-first.png"></image>
+					</block>
+					<block wx:elif="{{ item.id == 2 }}" >
+						<image class="ranking-list__item_icon" src="../../assets/images/zgc-rank-second.png"></image>
+					</block>
+					<block wx:elif="{{ item.id == 3 }}" >
+						<image class="ranking-list__item_icon" src="../../assets/images/zgc-rank-third.png"></image>
+					</block>
+					<block wx:else>
+						<text class="{{ item.id == rankings.own.id ? 'ranking-list__item_own' : '' }}">{{ item.id }}</text>
+					</block>
+				</view>
+				<view class="ranking-list__item ranking-list__item_two">
+					<image class="ranking-list__item_img" src="{{ item.image }}"></image>
+				</view>
+				<view class="ranking-list__item ranking-list__item_three">
+					<text>{{ item.name }}</text>
+				</view>
+				<view class="ranking-list__item ranking-list__item_four">
+					<text>已邀请{{ item.invite_num }}人</text>
+				</view>
+				<view class="ranking-list__item ranking-list__item_five">
+					<text class="weui-main__color">获得{{ item.payment_num }}车币</text>
+				</view>
+			</view>
+		</block> 
+	</scroll-view>
+	<view wx:if="{{ winner }}" class="weui-flex ranking-fixed" data-id="{{ rankings.own.id }}">
+		<view class="ranking-list__item ranking-list__item_one">
+			<view class="ranking-list__item_title">您的排名</view>
+			<text>{{ rankings.own.id }}</text>
+		</view>
+		<view class="ranking-list__item ranking-list__item_two">
+			<image class="ranking-list__item_img" src="{{ rankings.own.image }}"></image>
+		</view>
+		<view class="ranking-list__item ranking-list__item_three">
+			<text>{{ rankings.own.name }}</text>
+		</view>
+		<view class="ranking-list__item ranking-list__item_four">
+			<text>已邀请{{ rankings.own.invite_num }}人</text>
+		</view>
+		<view class="ranking-list__item ranking-list__item_five">
+			<text>获得{{ rankings.own.payment_num }}车币</text>
+		</view>
+	</view> 	
+</view>
+

@@ -1,0 +1,138 @@
+<style lang="less">
+  .visitor-container {
+    width: 100%;
+    height: 100%;
+  }
+  .visitor-list {
+    margin-top: 1rpx;
+  }
+  .visitor-list .digital-copyright {
+    top: auto;
+    bottom: 32rpx;
+    right: 32rpx;
+  }
+  .weui-btn__create {
+    width: 630rpx;
+    margin-top: 54rpx;
+    margin-bottom: 14rpx;
+  }
+  .home-top {
+    margin-bottom: 101rpx;
+  }
+  .home-top .user-info {
+    padding: 40rpx 60rpx 50rpx;
+  }
+</style>
+<template>
+  <view class="visitor-container">
+    <view class="home-top">
+      <view class="home-top__bg"></view>
+      <view class="user-info weui-flex__align">
+        <view>
+          <image class="user-info__avatar" src="{{ avatarUrl || '../../assets/images/user_default.png' }}"></image>
+        </view>
+        <view>
+          <view class="user-info__nickname">{{ nickName || '链我' }}的</view>
+          <view class="user-info__store">{{ storeName || '链我小课' }}</view>
+        </view>
+        <view class="user-share weui-flex__align" @tap="setUpShop()">
+          <image class="user-share__icon" src="../../assets/images/index_home.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="visitor-list">
+      <view wx:if="{{ !items.length }}" class="items-empty">暂无数据</view>
+      <scroll-view wx:else scroll-y>
+        <block wx:for="{{ items }}" wx:key="index">
+          <view class="index-media" @tap="navigateTo('/pages/visitor/detail', '{{ item.id }}')">
+            <view class="index-media__hd">
+              <image class="index-media__thumb" src="{{ item.cover || '../../assets/images/upload_btn.png' }}" mode="aspectFill"></image>
+            </view>
+            <view class="index-media__bd">
+              <view class="index-media__title">{{ item.title }}</view>
+              <view class="index-media__info">
+                <view wx:if="{{ item.price != '0.00' }}" class="index-media__tips">¥{{ item.price }}</view>
+                <view wx:else class="index-media__free">免费</view>
+              </view>
+              <view class="index-media__shipment">{{ item.shipment }}人已获得知识</view>
+            </view>
+            <block wx:if="{{ item.is_copyright == '1' }}">
+              <view class="digital-copyright">
+                <view wx:if="{{ item.address }}" class="digital-copyright__info" @tap="navigateTo('/pages/copyright/index', '{{ item.id }}')">{{ item.address }}</view>
+                <view wx:else class="digital-copyright__info">认证中…</view>
+                <view class="digital-copyright__lower weui-flex__align">
+                  <image wx:if="{{ item.address }}" class="digital_copyright__icon" src="../../assets/images/logo2.png"></image>
+                  <image wx:else class="digital_copyright__icon" src="../../assets/images/logo1.png"></image>
+                  <text>数字版权</text>
+                </view>
+              </view>
+            </block>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <i-toast id="toast" />
+  </view>   
+</template>
+<script>
+  import wepy from 'wepy'
+  const { $Toast } = require('../../components/base/index')
+  export default class Visitor extends wepy.page {
+    config = {
+      navigationBarTitleText: '链我',
+      'usingComponents': {
+        'i-toast': '../../components/toast/index'
+      }
+    }
+
+    data = {
+      canIUse: wepy.canIUse('button.open-type.getUserInfo'),
+      avatarUrl: '',
+      nickName: '',
+      storeName: '',
+      isLogin: false,
+      items: []
+    }
+
+    methods = {
+      navigateTo(path, id) {
+        let that = this
+        that.$parent.WxService.navigateTo(path, {id: id})
+      },
+      setUpShop() {
+        let that = this
+        that.$parent.WxService.switchTab('/pages/home/index').then(res => {
+          var page = that.getCurrentPages().pop()
+          if (page === undefined || page === null) return
+          page.onLoad()
+        })
+      }
+    }
+  
+    onLoad(options) {
+      let that = this
+      that.getData(options.store_id, options.user_id)
+    }
+
+    getData(storeId, userId) {
+      let that = this
+      let params = {store_id: storeId, user_id: userId, page: 1}
+      that.$parent.HttpService.getBrowseStroe(params).then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          that.avatarUrl = data.data[0].avatar
+          that.nickName = data.data[0].nickname
+          that.storeName = data.data[0].store_name
+          that.items = data.data[0].rows
+          that.$apply()
+        } else {
+          $Toast({ content: data.msg || '服务器请求失败' })
+        }
+      })
+    }
+
+    onReachBottom(event) {
+      console.log('上拉加载下一页')
+    }
+  }
+</script>

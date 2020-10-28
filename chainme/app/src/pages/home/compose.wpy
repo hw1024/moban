@@ -1,0 +1,153 @@
+<style lang="less">
+.compose-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+.weui-btn__default {
+  width: 630rpx;
+  margin-top: 80rpx;
+}
+.painter-content {
+  width: 630rpx; 
+  height: 839rpx;
+  margin-top: 74rpx;
+  margin-left: 60rpx;
+  justify-content: center;
+}
+.painter-content .painter-tips{
+  color: #333333;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.painter-img {
+  width: 630rpx; 
+  height: 839rpx;
+  margin-top: 74rpx;
+  margin-left: 60rpx;
+  border-radius: 20rpx;
+  box-shadow:0px 2rpx 22rpx -6rpx #333333;
+}
+</style>
+<template>
+<view class="compose-container">
+  <view class="painter-content weui-flex__align" wx:if="{{ !imagePath }}">
+    <view class="painter-tips">图片生成中...</view>
+    <painter customStyle='margin-left:60rpx;position: absolute;top:-1000rpx' palette="{{template}}" bind:imgOK="onImgOK" />
+  </view>
+  <image class="painter-img" wx:else src="{{ imagePath }}" />
+  <view class="share-btn">
+    <button class="weui-btn__default" type="primary" @tap="saveImage">保存图片</button>
+  </view>
+  <i-toast id="toast" />
+</view>
+</template>
+<script>
+import wepy from 'wepy'
+import Compose from '../../palette/compose'
+const { $Toast } = require('../../components/base/index')
+
+export default class HomeCompose extends wepy.page {
+  Compose = new Compose()
+
+  optsdata = {}
+
+  config = {
+    navigationBarTitleText: '分享',
+    'usingComponents': {
+      'i-toast': '../../components/toast/index',
+      'painter': '../../components/painter/painter'
+    }
+  }
+
+  data = {
+    template: {},
+    imagePath: ''
+  }
+
+  methods = {
+    onImgOK(e) {
+      let that = this
+      that.imagePath = e.detail.path
+      that.$apply()
+    },
+    saveImage() {
+      let that = this
+      that.$parent.WxService.saveImageToPhotosAlbum({
+        filePath: that.data.imagePath
+      }).then(res => {
+        if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
+          $Toast({ content: '图片保存成功', type: 'success' })
+        }
+      }).catch(res => {
+        if (res.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
+          wepy.openSetting({
+            success(settingdata) {
+              if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                $Toast({ content: '获取权限成功，给出再次点击图片保存到相册' })
+              } else {
+                $Toast({ content: '获取权限失败，给出不给权限就无法正常使用' })
+              }
+            }
+          })
+        }
+      })
+    }
+  }
+
+  onLoad(options) {
+    let that = this
+    that.getData(options.id)
+  }
+
+  getData(id) {
+    let that = this
+    let params = {id: id}
+    that.$parent.HttpService.postLoreShare(params).then(res => {
+      const data = res.data
+      if (data.code === 200) {
+        const imgCode = that.$parent.renderImage(data.data.img)
+        that.optsdata.bgUrl = data.data.lore.cover_url
+        that.optsdata.title = data.data.lore.title
+        that.optsdata.code = imgCode
+        that.optsdata.nickName = data.data.user.nickname
+        that.optsdata.avatarUrl = data.data.user.avatar
+        that.loadResources(that.optsdata).then(res => {
+          that.optsdata.code = res.codeUrl
+          that.optsdata.bgUrl = res.bgUrl
+          that.optsdata.avatarUrl = res.avatarUrl
+          that.template = that.Compose.do(that.optsdata)
+          that.$apply()
+        })
+      } else {
+        $Toast({ content: data.msg || '服务器请求失败' })
+      }
+    })
+  }
+
+  loadResources(data) {
+    const {avatarUrl, code, bgUrl} = data
+    const downloadFile = (url) => {
+      return new Promise((resolve, reject) => {
+        wepy.downloadFile({
+          url,
+          success({ tempFilePath }) {
+            resolve(tempFilePath)
+          }
+        })
+      })
+    }
+    let promises = [downloadFile(avatarUrl), downloadFile(code), downloadFile(bgUrl)]
+    return Promise.all(promises).then(values => {
+      return {
+        avatarUrl: values[0],
+        codeUrl: values[1],
+        bgUrl: values[2]
+      }
+    }).catch(values => {
+      console.log(values)
+    })
+  }
+}
+</script>

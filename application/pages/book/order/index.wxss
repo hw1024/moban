@@ -1,0 +1,39 @@
+/**index.wxss**/
+.order-box__title {
+	background: #fff;
+	font-size: 30rpx;
+}
+.order-box__info {
+	background: #fff;
+	margin-top: 10rpx;
+	padding: 0 24rpx;
+	font-size: 28rpx;
+	color: #666;
+}
+.order-info__item_text {
+	font-size: 24rpx;
+	line-height: 1.5;
+	margin-top: 24rpx;
+	margin-bottom: 20rpx;
+}
+.order-info__item_image {
+	width: 240rpx;
+	height: 200rpx;
+	vertical-align: middle;
+	margin-right: 60rpx;
+}
+.order-box__list {
+	background: #fff;
+	margin-top: 10rpx;
+}
+.order-btn {
+	width: 240rpx;
+	height: 60rpx;
+	margin: 40rpx auto;
+	line-height: 60rpx;
+	text-align: center;
+	font-size: 30rpx;
+	color: #A1A1A1;
+	border: 2rpx solid #C5C4C4;
+	border-radius: 100rpx;
+}

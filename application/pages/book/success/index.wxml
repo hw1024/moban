@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<view class="success-container">
+    <view class="success-top">
+    	<view class="success-top__status">
+    		<icon type="success" size="24" color="#7FCC00"/><text class="success-top__status_txt">订车成功</text>
+    	</view>
+    	<view class="success-top__content">
+    		<view class="success_btn" data-path="/pages/book/order/index" bindtap="redirectTo">查看订单</view>
+    		<view class="success_btn" data-path="/pages/make/index/index" bindtap="reLaunch">继续去赚车</view>
+    	</view>
+    </view>
+    <view class="success-list">
+    	<view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">4S店名称</view>
+            <view class="weui-cell__ft">{{ items.store_name }}</view>
+        </view>
+        <view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">车辆名称</view>
+            <view class="weui-cell__ft">{{ items.car_name }}</view>
+        </view>
+        <view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">联系业务员</view>
+            <view class="weui-cell__ft weui-main__color">{{ items.employee_phone }}</view>
+        </view>
+        <view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">锁定期</view>
+            <view class="weui-cell__ft">{{ items.locking_time }}({{ items.locking_rise_time }}至{{ items.locking_stop_time }})</view>
+        </view>
+        <view class="weui-cell success-list__item" data-path="/pages/book/agreement/index" bindtap="navigateTo">
+            <view class="weui-cell__bd">订金协议</view>
+            <view class="weui-cell__ft weui-main__color">《订车订金服务协议》</view>
+        </view>
+        <view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">支付时间</view>
+            <view class="weui-cell__ft">{{ items.pay_time }}</view>
+        </view>
+    </view>
+</view>
+

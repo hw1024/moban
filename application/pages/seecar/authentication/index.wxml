@@ -1,0 +1,28 @@
+<!--index.wxml-->
+<import src="../../common/toast.wxml"/>
+<template is="toast" data="{{ isShowToast, toastText }}"/>
+
+<view class="authentication-container">
+    <view class="authentication-top">
+		<view class="authentication-top__title">
+			<image class="authentication-top__title_icon" src="../../../assets/images/zgc-location.png"></image><text>{{ items.stroe_name }}</text>
+		</view>
+		<view class="authentication-top__info">
+			<image class="authentication-top__image" src="{{ items.user_image }}"></image>
+			<view class="authentication-top__name">{{ items.user_name }}</view>
+			<view class="{{ items.user_phone ? 'authentication-top__mess' : '' }} ">
+				<view wx:if="{{ !!items.user_phone }}" class="authentication-top__txt">客户：{{ items.user_phone }}</view>
+    			<view>预约码：<text class="weui-main__color">{{ items.car_code }}</text></view>
+			</view>
+		</view>
+    </view>
+    <view class="authentication-lower">
+		<view class="authentication-lower__form weui-flex">
+			<view>业务员编码</view>
+			<view>
+				<input class="authentication-lower__form_input" type="number" bindinput="employeeInput"/>
+			</view>
+		</view>
+		<view class="authentication-lower__btn" bindtap="employeeTap">确定认证</view>
+    </view>
+</view>

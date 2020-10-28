@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view class="store-container">
+  <view class="store-top">
+    <view class="store-title">
+      <image class="store-top_image" src="{{ stores.brand_image }}"></image>
+      <text>{{ stores.name }}</text>
+    </view>
+    <view class="swiper-container">
+      <swiper class="swiper_box" indicator-dots="{{ indicatorDots }}" autoplay="{{ autoplay }}" current="{{ current }}" interval="{{ interval }}" duration="{{ duration }}" circular="{{ circular }}" bindchange="swiperchange">
+        <block wx:for="{{  stores.store_image_data  }}" wx:key="">
+          <swiper-item>
+            <image src="{{ item.store_image }}" class="slide-image"/>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="swiper-pager">{{ current + 1 }}/{{ total }}</view>
+    </view>
+    <view class="store-info">
+       <view class="store-info__txt">{{ stores.description }}</view>
+       <view class="store-info__address">地址：<text>{{ stores.location_detail }}</text></view>
+    </view>
+  </view>
+  <view class="store-lower">
+    <view class="store-car__list">
+       <block wx:for="{{ stores.brand_url_data }}" wx:key="">
+        <view class="store-car__item">
+          <image class="store-car__item_img" src="{{ item.brand_url }}"></image>
+        </view>
+      </block>
+    </view>
+    <view class="store-car__all">
+      <view class="cars-all__num">共有{{ stores.car_type_count }}款车辆展示</view>
+      <view class="cars-all__btn" data-path="/pages/shop/list/index" bindtap="navigateTo">查看全部</view>
+    </view>
+  </view>
+  <view class="store-btn {{ stores.is_see_car != 1 ? 'store-btn__active' : '' }}" bindtap="bindSeecarTo">
+    <text wx:if="{{ stores.is_see_car == 1 }}">去4S店看车</text>
+    <text wx:if="{{ stores.is_see_car == 2 }}">已预约4S店看车</text>
+    <text wx:if="{{ stores.is_see_car == 3 }}">已到店看车</text>
+  </view>
+</view>

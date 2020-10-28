@@ -1,0 +1,24 @@
+<!--index.wxml-->
+<view class="success-container">
+    <view class="success-top">
+    	<view class="success-top__status">
+    		<icon type="success" size="24" color="#7FCC00"/><text class="success-top__status_txt">认证成功</text>
+    	</view>
+    	<view class="success-top__prize">看车用户可获得丰厚奖品</view>
+    </view>
+    <view class="success-list">
+    	<view wx:if="{{ !!items.user_phone }}" class="weui-cell success-list__item">
+            <view class="weui-cell__bd">客户</view>
+            <view class="weui-cell__ft">{{ items.user_phone }}</view>
+        </view>
+        <view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">业务员</view>
+            <view class="weui-cell__ft">{{ items.employee_name }}</view>
+        </view>
+        <view class="weui-cell success-list__item">
+            <view class="weui-cell__bd">认证时间</view>
+            <view class="weui-cell__ft">{{ items.see_car_time }}</view>
+        </view>
+    </view>
+</view>
+

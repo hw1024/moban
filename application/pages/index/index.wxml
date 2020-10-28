@@ -1,0 +1,70 @@
+<!--index.wxml-->
+<import src="../common/toast.wxml"/>
+<import src="../common/network.wxml"/>
+<template is="toast" data="{{ isShowToast, toastText }}"/>
+<template is="network" data="{{ networkStatus }}"/>
+
+<view class="home-container" wx:if="{{ !!networkStatus }}">
+	<swiper wx:if="{{ !!banners.length }}" class="swiper_box" indicator-dots="{{ indicatorDots }}" autoplay="{{ autoplay }}" current="{{ current }}" interval="{{ interval }}" duration="{{ duration }}" circular="{{ circular }}" bindchange="swiperchange" catchtap="onSwiperTap">
+	    <block wx:for="{{ banners }}" wx:key="">
+	        <swiper-item>
+	            <image src="{{ item.path }}" class="slide-image" data-url="{{item.url}}"/>
+	        </swiper-item>
+	    </block>
+	</swiper>
+	<view wx:else class="swiper_box">
+		<image src="../../assets/images/banner_default.png" class="slide-image"/>
+	</view>
+	<view class="home-content">
+		<view class="home-content__title weui-flex">
+			<view class="home-content__title_address">
+				<image class="home-content__title_icon" src="../../assets/images/zgc-location.png"></image><text>{{ carrs.address }}</text>
+			</view>
+			<view class="home-content__title_txt">选择你想赚的车</view>
+			<view class="home-content__title_link" data-path="/pages/invest/list/index" bindtap="navigateTo">全部车辆</view>
+		</view>
+		<view class="home-content__list">
+			<block wx:for="{{ carrs.homeList }}" wx:key="">
+				<view class="home-content__item" data-index="{{ index }}" data-id="{{ item.id }}" data-car-id="{{ item.car_id }}" data-help="{{ item.help_num }}" data-payment="{{ item.payment_num }}" data-series="{{ item.series }}" data-shop="{{ item.shop }}" bindtap="selectcarTap">
+					<image class="home-content__item_img" src="{{ item.image }}"></image>
+					<view class="home-content__item_text">
+						<view class="home-content__item_series">{{ item.series }}</view>
+						<view class="weui-main__color">首付：{{ item.payment_num }}车币</view>
+					</view>
+					<view hidden="{{ index == activeIndex ? false : true }}"   class="home-content__item_active">
+						<icon type="success" size="25" color="#F5D421"/>
+					</view>
+				</view>
+			</block>
+		</view>
+		<view class="home-content__result weui-flex">
+			<view animation="{{animationData}}" class="home-result__able weui-flex" hidden="{{ carrs.selectData ? false : true }}">
+				<view class="home-result__able_left">
+					<view class="home-result__able_left-title">你选中的车辆</view>
+					<view class="home-result__able_left-series">{{ carrs.selectData.series }}</view>
+				</view>
+				<view class="home-result__able_right">
+					<view class="home-result__able_right-items">
+						<image class="home-result__able_icon" src="../../assets/images/zgc-icon-coin.png"></image>
+						<text>{{ carrs.selectData.payment }}车币</text>
+					</view>
+					<view class="home-result__able_right-items">
+						<image class="home-result__able_icon" src="../../assets/images/zgc-icon-location.png"></image>
+						<text>{{ carrs.selectData.shop }}</text>
+					</view>
+					<view class="home-result__able_right-items">
+						<image class="home-result__able_icon" src="../../assets/images/zgc-icon-friend.png"></image>
+						<text>{{ carrs.selectData.help }}人助力即可赚得首付</text>
+					</view>
+				</view>
+			</view>
+			<view class="home-result__disable" hidden="{{ carrs.selectData ? true : false }}">
+				<text>您还未选择任何车辆…</text>
+			</view>
+		</view>
+		<button class="home-btn" type="default" bindtap="bindForm">点击开始赚车</button>
+		<view class="home-help">
+			<image class="home-help__img" src="../../assets/images/zgc-help.png"></image>
+		</view>
+	</view>
+</view>
